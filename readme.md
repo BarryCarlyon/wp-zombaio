@@ -60,45 +60,7 @@ For Extra help/support or otherwise, either use the [WordPress Support Forum](ht
 
 ## Screenshots ##
 
-###1. The ShortCodes and Widgets in Action###
-![The ShortCodes and Widgets in Action](http://s-plugins.wordpress.org/wp-zombaio/assets/screenshot-1.png)
-
-###2. Activating the Plugin###
-![Activating the Plugin](http://s-plugins.wordpress.org/wp-zombaio/assets/screenshot-2.png)
-
-###3. Wizard Step 1###
-![Wizard Step 1](http://s-plugins.wordpress.org/wp-zombaio/assets/screenshot-3.png)
-
-###4. Wizard Step 2###
-![Wizard Step 2](http://s-plugins.wordpress.org/wp-zombaio/assets/screenshot-4.png)
-
-###5. Wizard Step 3###
-![Wizard Step 3](http://s-plugins.wordpress.org/wp-zombaio/assets/screenshot-5.png)
-
-###6. The Settings Page in Full###
-![The Settings Page in Full](http://s-plugins.wordpress.org/wp-zombaio/assets/screenshot-6.png)
-
-###7. WP Widgets Page###
-![WP Widgets Page](http://s-plugins.wordpress.org/wp-zombaio/assets/screenshot-7.png)
-
-###8. Logs Interface###
-![Logs Interface](http://s-plugins.wordpress.org/wp-zombaio/assets/screenshot-8.png)
-
-###9. Menu Control###
-![Menu Control](http://s-plugins.wordpress.org/wp-zombaio/assets/screenshot-9.png)
-
-###10. Updating Users - Table###
-![Updating Users - Table](http://s-plugins.wordpress.org/wp-zombaio/assets/screenshot-10.png)
-
-###11. Updating Users - A User###
-![Updating Users - A User](http://s-plugins.wordpress.org/wp-zombaio/assets/screenshot-11.png)
-
-###12. Creating a Credit Purchasble Post###
-![Creating a Credit Purchasble Post](http://s-plugins.wordpress.org/wp-zombaio/assets/screenshot-12.png)
-
-###13. Graphs!###
-![Graphs!](http://s-plugins.wordpress.org/wp-zombaio/assets/screenshot-13.png)
-
+[Available Here](http://wordpress.org/extend/plugins/wp-zombaio/screenshots/)
 
 ## Changelog ##
 
