@@ -52,7 +52,7 @@ $this->admin_page_spacer(__('Login Control', 'wp-zombaio'));
 <p>You can pick a page to send users to, this page should containt a Login Form and a Register Form (or at least a link to your Zombaio Join Form)</p>
 <p>Zombaio Rules (or at least advice) that you should put a Zombaio Seal on your site somewhere, this is a good page to place it</p>
 <p>You can do something like:</p>', 'wp-zombaio');
-		echo '<textarea readonly="readonly" style="width: 600px;" rows="2">[zombaio_join align="left" width="300" join_url="JOINURL" buttonalign="center"]PRICING[/zombaio_join]
+		echo '<textarea onclick="jQuery(this).select();" readonly="readonly" style="width: 600px;" rows="2">[zombaio_join align="left" width="300" join_url="JOINURL" buttonalign="center"]PRICING[/zombaio_join]
 [zombaio_seal align="right"]</textarea>';
 		echo __('
 <p>Swap JOINURL for your Zombaio Pricing Structure, Join Form URL, and PRICING for some Introdutory Text, such as the Price and Membership Terms</p>

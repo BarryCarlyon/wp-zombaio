@@ -1,6 +1,6 @@
 === WP Zombaio ===
 Contributors: BarryCarlyon
-Donate link: http://barrycarlyon.co.uk/wordpress/wordpress-plugins/wp-zombaio/
+Donate link: http://barrycarlyon.co.uk/wordpress/wordpress-plugins/wp-zomabio/
 Tags: zombaio, membership, adult
 Requires at least: 3.4.2
 Tested up to: 3.4.2

@@ -2,7 +2,7 @@
 
 /*
  * Plugin Name: WP Zombaio
- * Plugin URI: http://barrycarlyon.co.uk/wordpress/wordpress-plugins/wp-zombaio/
+ * Plugin URI: http://barrycarlyon.co.uk/wordpress/wordpress-plugins/wp-zomabio/
  * Description: Catches Information from the Adult Payment Gateway Zombaio and acts accordingly
  * Author: Barry Carlyon
  * Version: 1.0.5
@@ -297,9 +297,7 @@ class wp_zombaio {
 	private function admin() {
 		add_action('admin_notices', array($this, 'admin_notices'));
 		add_action('admin_menu', array($this, 'admin_menu'));
-		add_action('admin_head', array($this, 'admin_head'));
 		add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
-		add_action('wp_ajax_wp_zombaio_post_lookup', array($this, 'wp_zombaio_post_lookup'));
 		add_action('wp_dashboard_setup', array($this, 'wp_dashboard_setup'));
 
 		//admin profile controller
@@ -555,49 +553,14 @@ jQuery(document).ready(function() {
 		}
 	}
 
-	// Seems silly to generate a whole file just for a single line of js....
-	public function admin_head() {
-		if (isset($_GET['page']) && substr($_GET['page'], 0, 10) == 'wp_zombaio') {
-			echo '
-<script type="text/javascript">
-jQuery(document).ready(function() {
-	jQuery(\'#redirect_target\').suggest(ajaxurl + \'?action=wp_zombaio_post_lookup\')
-});
-</script>
-';
-		}
-	}
 	public function admin_enqueue_scripts() {
 		wp_enqueue_script('google-chart-api', 'https://www.google.com/jsapi');
 		if (isset($_GET['page']) && substr($_GET['page'], 0, 10) == 'wp_zombaio') {
 			wp_enqueue_script('jquery-ui-dialog');
 			wp_enqueue_script('jquery-ui-tabs');
-			wp_enqueue_style('jquery-ui-css', 'http://jquery-ui.googlecode.com/svn/tags/latest/themes/base/jquery.ui.all.css');
-			wp_enqueue_script('suggest');
+			wp_enqueue_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css');
 			wp_enqueue_style('wp-zombaio-admin', plugin_dir_url(__FILE__) . 'wp_zombaio_admin.css', array(), WP_ZOMBAIO_VERSION);
 		}
-	}
-
-	/**
-	admin with priv ajax post lookup
-	*/
-	public function wp_zombaio_post_lookup() {
-		global $wpdb;
-
-		$search = like_escape($_REQUEST['q']);
-
-		$query = 'SELECT ID,post_title FROM ' . $wpdb->posts . '
-			WHERE post_title LIKE \'' . $search . '%\'
-			AND post_type = \'page\'
-			AND post_status = \'publish\'
-			ORDER BY post_title ASC';
-		foreach ($wpdb->get_results($query) as $row) {
-			$post_title = $row->post_title;
-			$id = $row->ID;
-
-			echo $id . '--' . $post_title . "\n";
-		}
-		die();
 	}
 
 	/**
@@ -723,7 +686,7 @@ jQuery(document).ready(function() {
 				echo '<div id="message" class="updated"><p>' . __('Settings Updated', 'wp-zombaio') , '</p></div>';
 			}
 
-			echo '<p>' . __('For Reference, your Zombaio Postback URL (ZScript) should be set to', 'wp-zombaio') . ' <input type="text" name="postbackurl" value="' . site_url() . '" /></p>';
+			echo '<p>' . __('For Reference, your Zombaio Postback URL (ZScript) should be set to', 'wp-zombaio') . ' <input type="text" name="postbackurl" value="' . site_url() . '" onclick="jQuery(this).select();" readonly="readonly" /></p>';
 			echo '<table>';
 
 			echo '<tr><td style="width: 200px;"></td><td><h3>' . __('Standard Settings', 'wp-zombaio') . '</h3></td></tr>';
@@ -774,11 +737,19 @@ jQuery(document).ready(function() {
 					<option value="1" ' . ($this->options->redirect_target_enable ? 'selected="selected"' : '') . '>' . __('On', 'wp-zombaio') . '</option>
 					<option value="0" ' . ($this->options->redirect_target_enable ? '' : 'selected="selected"') . '>' . __('Off', 'wp-zombaio') . '</option>
 				</select></td></tr>
-			<tr><th valign="top"><label for="redirect_target">' . __('Redirect Target - Page Title', 'wp-zombaio') . '</label></th>
+			<tr><th valign="top"><label for="redirect_target">' . __('Redirect Target', 'wp-zombaio') . '</label></th>
 				<td>' . __('Where shall we send them? (Leave blank for the default WP Login)', 'wp-zombaio') , '<br />
-					<input type="text" name="redirect_target" id="redirect_target" value="' . $this->options->redirect_target . '" /><br />'
-					. __('Start Typing the Page Title and we will find it, we will add the Post ID to the start so ignore the number', 'wp-zombaio')
-					. sprintf(__('<p>See the <a href="%s">Guide</a> on usage</p>', 'wp-zombaio'), '?page=wp_zombaio_guide')
+					';
+
+			wp_dropdown_pages(array(
+				'name' => 'redirect_target',
+				'echo' => 1,
+				'show_option_none' => __( '&mdash; Select &mdash;' ),
+				'option_none_value' => '0',
+				'selected' => $this->options->redirect_target
+			));
+
+			echo sprintf(__('<p>See the <a href="%s">Guide</a> on usage</p>', 'wp-zombaio'), '?page=wp_zombaio_guide')
 					. '</td></tr>
 			';
 
@@ -1468,8 +1439,7 @@ jQuery(document).ready(function() {
 			$redirect = FALSE;
 
 			if ($this->options->redirect_target) {
-				$target = substr($this->options->redirect_target, 0, strpos($this->options->redirect_target, '--'));
-				$target_url = get_permalink($target);
+				$target_url = get_permalink($this->options->redirect_target);
 			} else {
 				$target = TRUE;
 				$target_url = home_url('wp-login.php');
