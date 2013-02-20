@@ -559,7 +559,7 @@ jQuery(document).ready(function() {
 			wp_enqueue_script('jquery-ui-dialog');
 			wp_enqueue_script('jquery-ui-tabs');
 			wp_enqueue_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css');
-			wp_enqueue_style('wp-zombaio-admin', plugin_dir_url(__FILE__) . 'wp_zombaio_admin.css', array(), WP_ZOMBAIO_VERSION);
+			wp_enqueue_style('wp-zombaio-admin', plugin_dir_url(__FILE__) . 'assets/wp_zombaio_admin.css', array(), WP_ZOMBAIO_VERSION);
 		}
 	}
 
@@ -1507,7 +1507,7 @@ jQuery(document).ready(function() {
 	script/style
 	*/
 	public function wp_enqueue_scripts() {
-		wp_enqueue_style('wp_zombaio_css', plugin_dir_url(__FILE__) . 'wp_zombaio.css');
+		wp_enqueue_style('wp_zombaio_css', plugin_dir_url(__FILE__) . 'assets/wp_zombaio.css');
 	}
 	
 	/**
