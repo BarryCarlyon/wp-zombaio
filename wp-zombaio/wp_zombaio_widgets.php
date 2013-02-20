@@ -182,6 +182,9 @@ class wp_zombaio_login extends wp_widget {
 
 		echo $before_widget;
 		echo $before_title . $title . $after_title;
+		if (!$redirect) {
+			$redirect = $_SERVER['REQUEST_URI'];
+		}
 		wp_login_form(array(
 			'redirect' => site_url($redirect)
 		));
@@ -213,7 +216,7 @@ class wp_zombaio_login extends wp_widget {
 			'name' => $this->get_field_name('redirect'),
 			'echo' => 1,
 			'show_option_none' => __('Same Page', 'wp-zombaio'),
-			'option_none_value' => '/',
+			'option_none_value' => '',
 			'selected' => $instance['redirect']
 		));
 		echo '</div></label>
