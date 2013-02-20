@@ -182,7 +182,9 @@ class wp_zombaio_login extends wp_widget {
 
 		echo $before_widget;
 		echo $before_title . $title . $after_title;
-		wp_login_form();
+		wp_login_form(array(
+			'redirect' => site_url($redirect)
+		));
 		echo $after_widget;
 
 		$cache[$args['widget_id']] = ob_get_flush();
@@ -198,20 +200,20 @@ class wp_zombaio_login extends wp_widget {
 	function form($instance) {
 		$defaults = array(
 			'title'		=> 'Login',
-			'redirect'	=> '',
+			'redirect'	=> '/',
 		);
 		$instance = wp_parse_args((array)$instance, $defaults);
 
 		echo '<label style="display: block;" for="' . $this->get_field_id('title') . '">' . __('Title:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('title') . '" id="' . $this->get_field_id('title') . '" value="' . $instance['title'] . '" style="float: right;" /></label>';
 		echo '<br />';
-		echo '<label style="display: block;" for="' . $this->get_field_id('title') . '">' . __('Redirect to:', 'wp-zombaio');
+		echo '<label style="display: block;" for="' . $this->get_field_id('redirect') . '">' . __('Redirect to:', 'wp-zombaio');
 
 		echo '<div style="float: right;">';
 		wp_dropdown_pages(array(
-			'name' => $this->get_field_name('title'),
+			'name' => $this->get_field_name('redirect'),
 			'echo' => 1,
 			'show_option_none' => __('Same Page', 'wp-zombaio'),
-			'option_none_value' => '0',
+			'option_none_value' => '/',
 			'selected' => $instance['redirect']
 		));
 		echo '</div></label>
