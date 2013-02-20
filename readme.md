@@ -76,6 +76,7 @@ For Extra help/support or otherwise, either use the [WordPress Support Forum](ht
 * Graphs!
 * Ability to enable/disable email copies and change the target email address for them
 * Added Approval and Decline URL's as arguments to both the shortcode and widget for Join Form
+* Added a option to the Login Widget to control the redirect on succesful login
 
 ### 1.0.4 ###
 * Tweaks to the Validate ZScript Code

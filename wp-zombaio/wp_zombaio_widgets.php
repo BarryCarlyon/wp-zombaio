@@ -192,15 +192,32 @@ class wp_zombaio_login extends wp_widget {
 	function update($new_instance, $old_instance) {
 		$instance = $old_instance;
 		$instance['title'] = $new_instance['title'];
+		$instance['redirect'] = $new_instance['redirect'];
 		return $instance;
 	}
 	function form($instance) {
 		$defaults = array(
 			'title'		=> 'Login',
+			'redirect'	=> '',
 		);
 		$instance = wp_parse_args((array)$instance, $defaults);
 
-		echo '<label for="' . $this->get_field_id('title') . '">' . __('Title:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('title') . '" id="' . $this->get_field_id('title') . '" value="' . $instance['title'] . '" /></label>';
+		echo '<label style="display: block;" for="' . $this->get_field_id('title') . '">' . __('Title:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('title') . '" id="' . $this->get_field_id('title') . '" value="' . $instance['title'] . '" style="float: right;" /></label>';
+		echo '<br />';
+		echo '<label style="display: block;" for="' . $this->get_field_id('title') . '">' . __('Redirect to:', 'wp-zombaio');
+
+		echo '<div style="float: right;">';
+		wp_dropdown_pages(array(
+			'name' => $this->get_field_name('title'),
+			'echo' => 1,
+			'show_option_none' => __('Same Page', 'wp-zombaio'),
+			'option_none_value' => '0',
+			'selected' => $instance['redirect']
+		));
+		echo '</div></label>
+		<br />
+		' . __('Leave blank for on successful Login, redirect to the same page', 'wp-zombaio');
+
 		echo '<br />';
 	}
 
