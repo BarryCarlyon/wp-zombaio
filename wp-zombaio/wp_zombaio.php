@@ -2,25 +2,15 @@
 
 /*
  * Plugin Name: WP Zombaio
- * Plugin URI: http://barrycarlyon.co.uk/wordpress/wordpress-plugins/wp-zomabio/
+ * Plugin URI: http://barrycarlyon.co.uk/wordpress/wordpress-plugins/wp-zombaio/
  * Description: Catches Information from the Adult Payment Gateway Zombaio and acts accordingly
  * Author: Barry Carlyon
- * Version: 1.0.5
+ * Version: 1.0.4.dev
  * Author URI: http://barrycarlyon.co.uk/wordpress/
  */
-
-/*
-* $Id: wp_zombaio.php 615736 2012-10-22 19:14:33Z BarryCarlyon $
-* $Revision: 615736 $
-* $Date: 2012-10-22 20:14:33 +0100 (Mon, 22 Oct 2012) $
-*/
-
-define('WP_ZOMBAIO_VERSION', '1.0.5');
-
+ 
 class wp_zombaio {
 	function __construct($proc = FALSE) {
-		require_once(plugin_dir_path(__FILE__) . 'wp_zombaio_widgets.php');
-
 		if (isset($_GET['bcreset'])) {
 			delete_option('wp_zombaio');
 		}
@@ -41,9 +31,6 @@ class wp_zombaio {
 	}
 	
 	private function setup() {
-		/**
-		Data Codes
-		*/
 		// user.delete codes
 		$this->delete_codes = array(
 			'',
@@ -58,7 +45,6 @@ class wp_zombaio {
 			__('Password problems', 'wp-zombaio'),
 			__('Unable to load content fast enough', 'wp-zombaio'),
 			__('Other', 'wp-zombaio'),
-			__('Rebill Failed', 'wp-zombaio'),
 		);
 		// rebill success
 		$this->rebill_codes = array(
@@ -66,7 +52,7 @@ class wp_zombaio {
 			__('Approved', 'wp-zombaio'),
 			__('Declined, retrying in 5 days', 'wp-zombaio'),
 		);
-		// appendix a
+		// app a
 		$this->chargeback_codes = array(
 			'30'	=> __('CB - Services/Merchandise Not Received', 'wp-zombaio'),
 			'41'	=> __('Cancelled Recurring Transaction', 'wp-zombaio'),
@@ -90,7 +76,7 @@ class wp_zombaio {
 			__('Zombaio is liable for the chargeback (Fraud Insurance)', 'wp-zombaio'),
 		);
 		// decline codes
-		// appendix b
+		// app b
 		$this->decline_codes = array(
 			'B01'	=> __('Declined by Issuing Bank', 'wp-zombaio'),
 			'B02'	=> __('Card Expired', 'wp-zombaio'),
@@ -109,92 +95,47 @@ class wp_zombaio {
 			'E02'	=> __('Routing Error', 'wp-zombaio'),
 			'E03'	=> __('General Error', 'wp-zombaio'),
 		);
-		/**
-		End Data
-		*/
+
 
 		$this->init();
 		add_action('init', array($this, 'post_types'));
 		add_action('plugins_loaded', array($this, 'detect'));
 		add_action('widgets_init', array($this, 'widgets_init'));
-
-		add_filter('wp_authenticate_user', array($this, 'wp_authenticate_user'), 10, 2);// check at login
-		add_action('init', array($this, 'wp_authenticate_user_check'));// check all the time
+		add_filter('wp_authenticate_user', array($this, 'wp_authenticate_user'), 10, 2);
 
 		load_plugin_textdomain('wp-zombaio', false, basename(dirname(__FILE__)), '/languages');
 
-		/**
-		other common
-		*/
-		if ($this->options->menus) {
-			add_action('after_setup_theme', array($this, 'menus'));
-			add_filter('wp_nav_menu_args', array($this, 'menu_select'));
-		}
-
 		return;
 	}
-	public function init($sanity = FALSE) {
+	public function init() {
 		$options = get_option('wp_zombaio', FALSE);
-		$save = FALSE;
 		if (!$options) {
-			$options = $this->sanity_check();
+			$options = new stdClass();
+			$options->site_id = '';
+			$options->gw_pass = '';
+			$options->bypass_ipn_ip_verification = FALSE;
+			$options->delete = TRUE;
+			$options->wizard = FALSE;
+
+			$options->redirect_target_enable = FALSE;
+			$options->redirect_target = '';
+			$options->redirect_home_page = FALSE;
+
+			$options->seal_code = '';
+
+			$options->bypass_ipn_ip_verification = FALSE;
+			$options->raw_logs = FALSE;
+
 			$this->options = $options;
-		} else {
-			$test = $this->sanity_check();
-			foreach ($test as $item => $value) {
-				if (!isset($options->$item)) {
-					$save = TRUE;
-					$options->$item = $value;
-				}
-			}
-		}
-		$this->options = $options;
-		if ($save) {
 			$this->saveoptions();
 		}
+		$this->options = $options;
 		return;
-	}
-	/**
-	sanity check
-	*/
-	private function sanity_check() {
-		$options = new stdClass();
-
-		// base options
-		$options->site_id = '';
-		$options->gw_pass = '';
-
-		$options->delete = TRUE;// what to do on user.delete true delete false suspend
-
-		$options->wizard = FALSE;// flag for wizard competion
-
-		// logged out redirect
-		$options->redirect_target_enable = FALSE;
-		$options->redirect_target = '';
-
-		// seal
-		$options->seal_code = '';
-
-		// misc
-		$options->bypass_ipn_ip_verification = FALSE;
-		$options->raw_logs = FALSE;
-
-		// enable/disable plugin powered menu
-		$options->menus = FALSE;
-
-		// notifications
-		$options->notify_enable = TRUE;
-		$options->notify_target = '';
-
-		return $options;
 	}
 	private function saveoptions() {
 		return update_option('wp_zombaio', $this->options);
 	}
 
-	/**
-	Log post type
-	*/
 	public function post_types() {
 		register_post_type(
 			'wp_zombaio',
@@ -277,43 +218,15 @@ class wp_zombaio {
 			'show_in_admin_status_list' => TRUE,
 			'label_count' => _n_noop( 'Card Declined Report <span class="count">(%s)</span>', 'Card Declined Report <span class="count">(%s)</span>', 'wp-zombaio'),
 		));
-		register_post_status('credit_spend', array(
-			'label' => __('Credits Spent', 'wp-zombaio'),
-			'public' => FALSE,
-			'exclude_from_search' => TRUE,
-			'show_in_admin_all_list' => FALSE,
-			'show_in_admin_status_list' => TRUE,
-			'label_count' => _n_noop( 'Credits Spent <span class="count">(%s)</span>', 'Credits Spent <span class="count">(%s)</span>', 'wp-zombaio'),
-		));
 		
 		return;
 	}
 
-	/**
-
-	Admin Setup
-
-	*/
 	private function admin() {
 		add_action('admin_notices', array($this, 'admin_notices'));
 		add_action('admin_menu', array($this, 'admin_menu'));
+		add_action('admin_head', array($this, 'admin_head'));
 		add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
-		add_action('wp_dashboard_setup', array($this, 'wp_dashboard_setup'));
-
-		//admin profile controller
-		add_action('profile_update', array($this, 'profile_update'));
-		add_action('show_user_profile', array($this, 'edit_user_profile'));
-		add_action('edit_user_profile', array($this, 'edit_user_profile'));
-
-		// users table
-		add_filter('manage_users_columns', array($this, 'manage_users_columns'));
-		add_filter('manage_users_custom_column', array($this, 'manage_users_custom_column'), 10, 3);
-
-		// posts table
-		add_filter('manage_posts_columns', array($this, 'manage_posts_columns'));
-		add_action('manage_posts_custom_column', array($this, 'manage_posts_custom_column'), 10, 2);
-		add_filter('manage_pages_columns', array($this, 'manage_posts_columns'));
-		add_action('manage_pages_custom_column', array($this, 'manage_posts_custom_column'), 10, 2);
 
 		// meta box
 		add_action('add_meta_boxes', array($this, 'add_meta_boxes'));
@@ -344,108 +257,13 @@ class wp_zombaio {
 	}
 
 	/**
-	User User admin Interface
-	profileuser = object
-	*/
-	function profile_update($user_id) {
-		if (current_user_can('edit_users')) {
-			if (isset($_POST['wp_zombaio_delete'])) {
-				update_user_meta($user_id, 'wp_zombaio_delete', $_POST['wp_zombaio_delete']);
-			}
-			if (isset($_POST['wp_zombaio_change_credits'])) {
-				update_user_meta($user_id, 'wp_zombaio_credits', $_POST['wp_zombaio_change_credits']);
-			}
-		}
-	}
-	function edit_user_profile($profileuser) {
-		echo '<table class="form-table" style="width: 100%;">';
-		echo '<col style="width:125px;"/>';
-
-		if (strlen($sub_id = get_user_meta($profileuser->ID, 'wp_zombaio_subscription_id', TRUE))) {
-			echo '<tr>';
-			echo '<th style="text-align: left; vertical-align: top;">' . __('Zombaio Subscription ID:', 'wp-zombaio') . '</th>';
-			echo '<td style="text-align: left; vertical-align: top;">' . $sub_id . '</td>';
-			echo '</tr>';
-		}
-
-		if (strlen($credits = get_user_meta($profileuser->ID, 'wp_zombaio_credits', TRUE))) {
-			echo '<tr>';
-			echo '<th style="text-align: left; vertical-align: top;">' . __('Zombaio Credits Balance:', 'wp-zombaio') . '</th>';
-			echo '<td style="text-align: left; vertical-align: top;">' . $credits . '</td>';
-			echo '</tr>';
-		}
-
-		if (current_user_can('edit_users')) {
-			echo '<tr>';
-			echo '<th style="text-align: left; vertical-align: top;">' . __('Update Zombaio Credits Balance:', 'wp-zombaio') . '</th>';
-			echo '<td style="text-align: left; vertical-align: top;"><input type="text" name="wp_zombaio_change_credits" value="' . $credits . '" /></td>';
-			echo '</tr>';
-
-			$suspend = get_user_meta($profileuser->ID, 'wp_zombaio_delete', TRUE);
-
-			echo '<tr>';
-			echo '<th style="text-align: left; vertical-align: top;">' . __('Zombaio Suspend Access:', 'wp-zombaio') . '</th>';
-			echo '<td style="text-align: left; vertical-align: top;">'
-				. '<select name="wp_zombaio_delete">'
-				. '<option value="0" ' . ($suspend ? '' : 'selected="selected"') . '>' . __('No', 'wp-zombaio') . '</option>'
-				. '<option value="1" ' . ($suspend ? 'selected="selected"' : '') . '>' . __('Yes', 'wp-zombaio') . '</option>'
-				. '</select>'
-				. '</td>';
-			echo '</tr>';
-		}
-
-		echo '</table>';
-	}
-	// Users table
-	function manage_users_columns($column) {
-		if (current_user_can('edit_users')) {
-			$column['wp_zombaio_subscription_id'] = __('Subscription ID', 'wp-zombaio');
-			$column['wp_zombaio_credits'] = __('Credits Balance', 'wp-zombaio');
-			$column['wp_zombaio_delete'] = __('Blocked', 'wp-zombaio');
-		}
-		return $column;
-	}
-	function manage_users_custom_column($value, $column_name, $user_id) {
-		if (current_user_can('edit_users')) {
-			switch ($column_name) {
-				case 'wp_zombaio_subscription_id':
-					return get_user_meta($user_id, 'wp_zombaio_subscription_id', TRUE);
-				case 'wp_zombaio_credits':
-					return get_user_meta($user_id, 'wp_zombaio_credits', TRUE);
-				case 'wp_zombaio_delete':
-					return get_user_meta($user_id, 'wp_zombaio_delete', TRUE) ? 'Blocked' : '';
-			}
-		}
-		return $value;
-	}
-
-	/**
-	Post table
-	*/
-	public function manage_posts_columns($column) {
-		$column['purchaseble'] = __('Purchasable', 'wp-zombaio');
-		$column['sales'] = __('Sales', 'wp-zombaio');
-		return $column;
-	}
-	public function manage_posts_custom_column($column_name, $post_id) {
-		switch ($column_name) {
-			case 'purchaseble':
-				echo (get_post_meta($post_id, 'wp_zombaio_credit_cost', TRUE) ? __('Yes', 'wp-zombaio') : __('No', 'wp-zombaio'));
-				break;
-			case 'sales':
-				echo 0;
-				break;
-		}
-	}
-
-	/**
 	Post meta Boxes
 	*/
 	public function add_meta_boxes() {
 		add_meta_box(
-			'wp_zombaio_credit_cost',
-			__('WP Zomabio Credit Cost', 'wp-zombaio'),
-			array($this, 'wp_zombaio_credit_cost'),
+			'wp_zombaio_redirect_disable',
+			__('WP Zomabio Allow Logged Out/Disable User Access', 'wp-zombaio'),
+			array($this, 'wp_zombaio_redirect_disable'),
 			'',
 			'side',
 			'high'
@@ -468,74 +286,27 @@ class wp_zombaio {
 		}
 		// auth ok
 
-		update_post_meta($post_id, 'wp_zombaio_credit_cost', $_POST['wp_zombaio_credit_cost']);
-		update_post_meta($post_id, 'wp_zombaio_credit_cost_type', $_POST['wp_zombaio_credit_cost_type']);
-		update_post_meta($post_id, 'wp_zombaio_credit_cost_time_qty', $_POST['wp_zombaio_credit_cost_time_qty']);
-		update_post_meta($post_id, 'wp_zombaio_credit_cost_time_units', $_POST['wp_zombaio_credit_cost_time_units']);
+		update_post_meta($post_id, 'wp_zombaio_redirect_disable', $_POST['wp_zombaio_redirect_disable']);
 	}
-	public function wp_zombaio_credit_cost($post) {
+	public function wp_zombaio_redirect_disable($post) {
 		wp_nonce_field( plugin_basename( __FILE__ ), 'wp_zombaio_postmeta' );
 
-		if (!strlen($cost = get_post_meta($post->ID, 'wp_zombaio_credit_cost', TRUE))) {
-			$cost = 0;
+		if (!strlen($wp_zombaio_redirect_disable = get_post_meta($post->ID, 'wp_zombaio_redirect_disable', TRUE))) {
+			$wp_zombaio_redirect_disable = 0;
 		}
-		if (!strlen($type = get_post_meta($post->ID, 'wp_zombaio_credit_cost_type', TRUE))) {
-			$type = 'normal';
-		}
-		if (!strlen($qty = get_post_meta($post->ID, 'wp_zombaio_credit_cost_time_qty', TRUE))) {
-			$qty = 1;
-		}
-		if (!strlen($units = get_post_meta($post->ID, 'wp_zombaio_credit_cost_time_units', TRUE))) {
-			$units = 'hours';
-		}
-
-		_e('Leave Credit Cost blank for not Purchasable', 'wp-zombaio');
 
 		echo '<table style="display: block;">';
 
 		echo '<tr>'
-			. '<th valign="top"><label for="wp_zombaio_credit_cost">' . __('Credit Cost', 'wp_zombaio') . '</label></th>'
-			. '<td style="width: 150px; text-align: center;"><input type="text" name="wp_zombaio_credit_cost" id="wp_zombaio_credit_cost" size="4" value="' . $cost . '" /></td>'
+			. '<th valign="top"><label for="wp_zombaio_redirect_disable">' . __('Allow Access to All', 'wp_zombaio') . '</label></th>'
+			. '<td style="width: 150px; text-align: center;">
+				<select name="wp_zombaio_redirect_disable">
+					<option value="0" ' . ($wp_zombaio_redirect_disable ? '' : 'selected="selected"') . '>' . __('No', 'wp-zombaio') . '</option>
+					<option value="1" ' . ($wp_zombaio_redirect_disable ? 'selected="selected"' : '') . '>' . __('Yes', 'wp-zombaio') . '</option>
+				</select>
+				</td>'
 			. '</tr>';
-
-		echo '<tr><th colspan="2">'
-			. __('Purchase Access Type', 'wp_zombaio')
-			. '</th></tr><tr><td style="text-align: center;">'
-			. '<label for="wp_zombaio_credit_cost_type_normal">' . __('Normal', 'wp_zombaio') . '</label>'
-			. '</td><td style="text-align: center;">'
-			. '<input type="radio" name="wp_zombaio_credit_cost_type" id="wp_zombaio_credit_cost_type_normal" class="wp_zombaio_credit_cost_type" value="normal" ' . ($type == 'normal' ? 'checked="checked"' : '') . ' />'
-			. '</td></tr><tr><td style="text-align: center;">'
-			. '<label for="wp_zombaio_credit_cost_type_timed">' . __('Timed', 'wp_zombaio') . '</label>'
-			. '</td><td style="text-align: center;">'
-			. '<input type="radio" name="wp_zombaio_credit_cost_type" id="wp_zombaio_credit_cost_type_timed" class="wp_zombaio_credit_cost_type" value="timed" ' . ($type == 'timed' ? 'checked="checked"' : '') . ' />'
-			. '</td></tr>';
-
-		echo '<tr id="wp_zombaio_credit_cost_type_timed_select" ' . ($type == 'timed' ? '' : 'style="display: none;"') . '><th>'
-			. __('Allow Access for', 'wp_zombaio_credits')
-			. '</th><td style="text-align: center;">'
-			. '<input type="text" name="wp_zombaio_credit_cost_time_qty" size="2" value="' . $qty . '" />'
-			. '<br />'
-			. '<select name="wp_zombaio_credit_cost_time_units">'
-			. '<option value="hours" ' . ($units == 'hours' ? 'selected="selected"' : '') . ' >' . __('Hours', 'wp-zombaio') . '</option>'
-			. '<option value="days" ' . ($units == 'days' ? 'selected="selected"' : '') . ' >' . __('Days', 'wp-zombaio') . '</option>'
-			. '<option value="weeks" ' . ($units == 'weeks' ? 'selected="selected"' : '') . ' >' . __('Weeks', 'wp-zombaio') . '</option>'
-			. '</select>'
-			. '</td></tr>';
-
 		echo '</table>';
-
-		echo '
-<script type="text/javascript">
-jQuery(document).ready(function() {
-	jQuery(\'.wp_zombaio_credit_cost_type\').change(function() {
-		jQuery(\'#wp_zombaio_credit_cost_type_timed_select\').hide();
-		if (jQuery(this).val() == \'timed\') {
-			jQuery(\'#wp_zombaio_credit_cost_type_timed_select\').show();
-		}
-	});
-});
-</script>
-';
 	}
 
 	/**
@@ -553,20 +324,67 @@ jQuery(document).ready(function() {
 		}
 	}
 
+	public function admin_head() {
+		echo '<style type="text/css">';
+		if (isset($_GET['page']) && substr($_GET['page'], 0, 10) == 'wp_zombaio') {
+			echo '
+#wp_zombaio .wp_zombaio_admin {
+	border: 1px solid #D3D3D3;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	margin: 5px;
+	background: #FBFBFB;
+}
+#wp_zombaio .wp_zombaio_admin h2 {
+	font-weight: 700;
+	color: #000000;
+	background: #D3D3D3;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+	-moz-border-radius-topright: 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	display: block;
+	padding-left: 20px;
+}
+#wp_zombaio .wp_zombaio_admin .wp_zombaio_inner { margin: 10px; }
+#wp_zombaio_logo { margin-top: 50px; float: right; }
+#wp_zombaio .wp_zombaio_admin ul.disc { list-style: disc; margin-left: 20px; }
+#wp_zombaio .wp_zombaio_admin #message { margin: 20px; }
+#wp_zombaio_transaction_logs { width: 100%; }
+#wp_zombaio_transaction_logs th, #wp_zombaio_transaction_logs td { border-right: 1px solid #9F9F9F; border-bottom: 1px solid #9F9F9F; }
+#wp_zombaio_transaction_logs th, #wp_zombaio_transaction_logs tfoot tr td { border-top: 1px solid #9F9F9F; background: #808080; }
+#wp_zombaio_transaction_logs td { padding: 0px 5px; }
+#wp_zombaio_transaction_logs tr th:first-child, #wp_zombaio_transaction_logs tr td:first-child { border-left: 1px solid #9F9F9F; text-align: center; }
+.wp_zombaio_inner .ui-widget-content { background: #FBFBFB; }
+
+#wp_zombaio_transaction_logs tr:nth-child(even) { background: #D3D3D3 }
+#wp_zombaio_transaction_logs tr:nth-child(odd) { background: #CFDBF3; }
+#wp_zombaio_transaction_logs tbody tr:hover { cursor: pointer; background: #87DEA4; }
+';
+	}
+echo '
+#icon-edit.icon32-posts-wp_zombaio {
+	background-image: url(\'' .  plugin_dir_url(__FILE__) . 'img/zombaio_icon_big.png\');
+	background-position: 0px 0px;
+}
+</style>
+';
+	}
 	public function admin_enqueue_scripts() {
-		wp_enqueue_script('google-chart-api', 'https://www.google.com/jsapi');
 		if (isset($_GET['page']) && substr($_GET['page'], 0, 10) == 'wp_zombaio') {
 			wp_enqueue_script('jquery-ui-dialog');
 			wp_enqueue_script('jquery-ui-tabs');
-			wp_enqueue_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css');
-			wp_enqueue_style('wp-zombaio-admin', plugin_dir_url(__FILE__) . 'assets/wp_zombaio_admin.css', array(), WP_ZOMBAIO_VERSION);
+			wp_enqueue_style('jquery-ui-css', 'http://jquery-ui.googlecode.com/svn/tags/latest/themes/base/jquery.ui.all.css');
 		}
 	}
 
 	/**
 	Utilty admin
 	*/
-	protected function admin_page_top($title = 'WP Zombaio', $logo = TRUE) {
+	private function admin_page_top($title = 'WP Zombaio', $logo = TRUE) {
 		echo '<div class="wrap" id="wp_zombaio">';
 
 		echo '<div class="wp_zombaio_admin">';
@@ -577,10 +395,10 @@ jQuery(document).ready(function() {
 		echo '<h2>' . $title . '</h2>';
 		echo '<div class="wp_zombaio_inner">';
 	}
-	protected function admin_page_bottom() {
+	private function admin_page_bottom() {
 		echo '</div></div></div>';
 	}
-	protected function admin_page_spacer($title = '') {
+	private function admin_page_spacer($title = '') {
 		echo '</div></div>';
 		echo '<br />';
 		echo '<div class="wp_zombaio_admin">';
@@ -593,9 +411,7 @@ jQuery(document).ready(function() {
 	}
 
 	/**
-
 	Main Settings Page
-
 	*/
 	public function admin_page() {
 		$this->admin_page_top();
@@ -686,7 +502,7 @@ jQuery(document).ready(function() {
 				echo '<div id="message" class="updated"><p>' . __('Settings Updated', 'wp-zombaio') , '</p></div>';
 			}
 
-			echo '<p>' . __('For Reference, your Zombaio Postback URL (ZScript) should be set to', 'wp-zombaio') . ' <input type="text" name="postbackurl" value="' . site_url() . '" onclick="jQuery(this).select();" readonly="readonly" /></p>';
+			echo '<p>' . __('For Reference, your Zombaio Postback URL (ZScript) should be set to', 'wp-zombaio') . ' <input type="text" name="postbackurl" value="' . site_url() . '" /></p>';
 			echo '<table>';
 
 			echo '<tr><td style="width: 200px;"></td><td><h3>' . __('Standard Settings', 'wp-zombaio') . '</h3></td></tr>';
@@ -714,19 +530,6 @@ jQuery(document).ready(function() {
 				</td></tr>';
 
 			/**
-			Notification
-			*/
-			echo '<tr><td></td><td><h3>' . __('Notification Preferences', 'wp-zombaio') . '</h3></tr></tr>';
-			echo '<tr><th valign="top">' . __('Enabled', 'wp-zombaio') . '</th><td valign="top">';
-				echo '<select name="notify_enable">
-					<option value="1" ' . ($this->options->notify_enable ? 'selected="selected"' : '') . '>' . __('Enabled', 'wp-zombaio') . '</option>
-					<option value="0" ' . ($this->options->notify_enable ? '' : 'selected="selected"') . '>' . __('Disabled', 'wp-zombaio') . '</option>
-				</select></td></tr>';
-			echo '<tr><th valign="top"><label for="notify_target">' . __('Email Address:', 'wp-zombaio') . '</label></th><td><input type="text" name="notify_target" id="notify_target" value="' . $this->options->notify_target . '" /></label>
-				<h4>' . sprintf(__('By default we Notify the Admin Email <i>%s</i> you can change that above or leave blank to send to the default', 'wp-zombaio'), get_option('admin_email')) . '</h4>
-			</td></tr>';
-
-			/**
 			Login Block
 			*/
 			echo '<tr><td></td><td><h3>' . __('Login Control', 'wp-zombaio') . '</h3></td></tr>';
@@ -737,9 +540,8 @@ jQuery(document).ready(function() {
 					<option value="1" ' . ($this->options->redirect_target_enable ? 'selected="selected"' : '') . '>' . __('On', 'wp-zombaio') . '</option>
 					<option value="0" ' . ($this->options->redirect_target_enable ? '' : 'selected="selected"') . '>' . __('Off', 'wp-zombaio') . '</option>
 				</select></td></tr>
-			<tr><th valign="top"><label for="redirect_target">' . __('Redirect Target', 'wp-zombaio') . '</label></th>
-				<td>' . __('Where shall we send them? (Leave blank for the default WP Login)', 'wp-zombaio') , '<br />
-					';
+			<tr><th valign="top"><label for="redirect_target">' . __('Redirect Target - Page Title', 'wp-zombaio') . '</label></th>
+				<td>' . __('Where shall we send them? (Leave blank for the default WP Login)', 'wp-zombaio') , '<br />';
 
 			wp_dropdown_pages(array(
 				'name' => 'redirect_target',
@@ -751,6 +553,14 @@ jQuery(document).ready(function() {
 
 			echo sprintf(__('<p>See the <a href="%s">Guide</a> on usage</p>', 'wp-zombaio'), '?page=wp_zombaio_guide')
 					. '</td></tr>
+			';
+
+			echo '
+			<tr><th valign="top"><label for="redirect_home_page">' . __('Redirect off the home page?', 'wp-zombaio') . '</label></th>
+				<td><select name="redirect_home_page">
+					<option value="1" ' . ($this->options->redirect_home_page ? 'selected="selected"' : '') . '>' . __('On', 'wp-zombaio') . '</option>
+					<option value="0" ' . ($this->options->redirect_home_page ? '' : 'selected="selected"') . '>' . __('Off', 'wp-zombaio') . '</option>
+				</select></td></tr>
 			';
 
 			/**
@@ -768,18 +578,6 @@ jQuery(document).ready(function() {
 					<option value="0" ' . ($this->options->raw_logs ? '' : 'selected="selected"') . '>' . __('Off', 'wp-zombaio') . '</option>
 				</select></td></tr>';
 
-			echo '<tr><th valign="top"><label for="menus">' . __('Use Plugin Logged In/Out Menus', 'wp-zombaio') . '</label></th>
-				<td><select name="menus">
-					<option value="1" ' . ($this->options->menus ? 'selected="selected"' : '') . '>' . __('On', 'wp-zombaio') . '</option>
-					<option value="0" ' . ($this->options->menus ? '' : 'selected="selected"') . '>' . __('Off', 'wp-zombaio') . '</option>
-				</select>';
-
-			if ($this->options->menus) {
-				echo '<p>' . sprintf(__('You can configure Menus under Appearance or <a href="%s">here</a>', 'wp-zombaio'), admin_url('nav-menus.php')) . '</p>';
-			}
-
-			echo '</td></tr>';
-
 			echo '</table>';
 		}
 
@@ -791,39 +589,37 @@ jQuery(document).ready(function() {
 	}
 
 	/**
-
 	Logs Page
-
 	*/
 	public function admin_page_logs() {
 		$this->admin_page_top(__('Transaction Logs', 'wp-zombaio'), FALSE);
 
-		$states = array(
+		$states = array('user_add', 'user_delete', 'user_addcredits', 'rebill', 'chargeback', 'declined');
+		$translations = array(
 			'user_add'			=> __('User Add', 'wp-zombaio'),
 			'user_delete'		=> __('User Delete', 'wp-zombaio'),
 			'user_addcredits'	=> __('User Add Credits', 'wp-zombaio'),
 			'rebill'			=> __('Rebill', 'wp-zombaio'),
 			'chargeback'		=> __('Chargeback', 'wp-zombaio'),
 			'declined'			=> __('Declined', 'wp-zombaio'),
-			'credit_spend'		=> __('Credits Spent', 'wp-zombaio'),
 		);
 
 		echo '<div id="wp_zombaio_tabs">';
 		echo '<ul>';
 		$totals = array();
-		foreach ($states as $state => $translation) {
+		foreach ($states as $state) {
 			$count = count(get_posts(array('post_type' => 'wp_zombaio', 'post_status' => $state, 'numberposts' => -1)));
 			$totals[$state] = $count;
-			echo '<li><a href="#wp_zombaio_' . $state . '">' . $translation . ' (' . $count . ')</a></li>';
+			echo '<li><a href="#wp_zombaio_' . $state . '">' . $translations[$state] . ' (' . $count . ')</a></li>';
 		}
 		echo '</ul>';
 
 		$limit = 20;
 
-		foreach ($states as $state => $translation) {
+		foreach ($states as $state) {
 			$offset = (isset($_REQUEST['wp_zombaio_' . $state . '_offset']) ? $_REQUEST['wp_zombaio_' . $state . '_offset'] : 0);
 
-			echo '<div id="wp_zombaio_' . $state . '" style="height: 500px; overflow: auto;">';
+			echo '<div id="wp_zombaio_' . $state . '" style="height: 500px;">';
 			$posts = get_posts(array(
 				'post_type' => 'wp_zombaio',
 				'post_status' => $state,
@@ -852,7 +648,6 @@ jQuery(document).ready(function() {
 						break;
 					case 'user_addcredits':
 						echo '<th>' . __('User', 'wp-zombaio') , '</th>';
-						echo '<th>' . __('Credits', 'wp-zombaio') . '</th>';
 						echo '<th>' . __('Amount', 'wp-zombaio') , '</th>';
 						echo '<th>' . __('Transaction ID', 'wp-zombaio') , '</th>';
 						echo '<th>' . __('Pricing ID', 'wp-zombaio') , '</th>';
@@ -875,10 +670,6 @@ jQuery(document).ready(function() {
 						echo '<th>' . __('Transaction ID', 'wp-zombaio') , '</th>';
 						echo '<th>' . __('Reason', 'wp-zombaio') , '</th>';
 						break;
-					case 'credit_spend':
-						echo '<th>' . __('Post', 'wp-zombaio') . '</th>';
-						echo '<th>' . __('Credits Spent', 'wp-zombaio') . '</th>';
-						break;
 				}
 
 				echo '<th>' . __('Log Time', 'wp-zombaio') , '</th>';
@@ -891,13 +682,13 @@ jQuery(document).ready(function() {
 				echo '<tr class="renderRawLog">';
 				echo '<td>' . $post->ID . '</td>';
 
-				$json = get_post_meta($post->ID, 'wp_zombaio_json_packet', TRUE);
+				$json = get_post_meta($post->ID, 'json_packet', TRUE);
 				$json = json_decode($json);
 
-				echo '<td class="talignleft">';
 				switch ($state) {
 					case 'user_add':
-						if ($user_id = get_post_meta($post->ID, 'wp_zombaio_user_id', TRUE)) {
+						echo '<td>';
+						if ($user_id = get_post_meta($post->ID, 'user_id', TRUE)) {
 							$user = get_user_by('id', $user_id);
 							if (!$user) {
 								echo __('Unreg: ', 'wp-zombaio') . ' ' . $json->username;
@@ -909,11 +700,8 @@ jQuery(document).ready(function() {
 						}
 						echo '</td>';
 						echo '<td>';
-						if ($amount = get_post_meta($post->ID, 'wp_zombaio_amount', TRUE)) {
+						if ($amount = get_post_meta($post->ID, 'amount', TRUE)) {
 							echo $json->Amount_Currency . ' ' . $amount;
-						} else {
-							echo $json->Amount_Currency . ' ' . $json->Amount;
-							echo ' - ' . __('Failed', 'wp-zombaio');
 						}
 						echo '</td>';
 						echo '<td>' . $json->TRANSACTION_ID . '</td>';
@@ -921,7 +709,8 @@ jQuery(document).ready(function() {
 						echo '<td>' . $json->PRICING_ID . '</td>';
 						break;
 					case 'user_delete':
-						if ($user_id = get_post_meta($post->ID, 'wp_zombaio_user_id', TRUE)) {
+						echo '<td>';
+						if ($user_id = get_post_meta($post->ID, 'user_id', TRUE)) {
 							$user = get_user_by('id', $user_id);
 							if (!$user) {
 								echo __('Unreg: ', 'wp-zombaio') . ' ' . $json->username;
@@ -935,31 +724,8 @@ jQuery(document).ready(function() {
 						echo '<td>' . (isset($this->delete_codes[$json->ReasonCode]) ? $json->ReasonCode . ' - ' . $this->delete_codes[$json->ReasonCode] : 'Unknown') . '</td>';
 						break;
 					case 'user_addcredits':
-						if ($user_id = get_post_meta($post->ID, 'wp_zombaio_user_id', TRUE)) {
-							$user = get_user_by('id', $user_id);
-							if (!$user) {
-								echo __('Unreg: ', 'wp-zombaio') . ' ' . $user->user_login;
-							} else {
-								echo '(' . $user_id . ') ' . $user->display_name . '<br />' . $user->user_email;
-							}
-						} else {
-							echo __('Unreg: ', 'wp-zombaio') . ' ' . $json->EMAIL;
-						}
-						echo '</td>';
-						echo '<td>' . $json->Credits . '</td>';
 						echo '<td>';
-						if ($amount = get_post_meta($post->ID, 'wp_zombaio_amount', TRUE)) {
-							echo $json->Amount_Currency . ' ' . $amount;
-						} else {
-							echo $json->Amount_Currency . ' ' . $json->Amount;
-							echo ' - ' . __('Failed', 'wp-zombaio');
-						}
-						echo '</td>';
-						echo '<td>' . $json->TransactionID . '</td>';
-						echo '<td>' . $json->PRICING_ID . '</td>';
-						break;
-					case 'rebill':
-						if ($user_id = get_post_meta($post->ID, 'wp_zombaio_user_id', TRUE)) {
+						if ($user_id = get_post_meta($post->ID, 'user_id', TRUE)) {
 							$user = get_user_by('id', $user_id);
 							if (!$user) {
 								echo __('Unreg: ', 'wp-zombaio') . ' ' . $json->username;
@@ -971,11 +737,29 @@ jQuery(document).ready(function() {
 						}
 						echo '</td>';
 						echo '<td>';
-						if ($amount = get_post_meta($post->ID, 'wp_zombaio_amount', TRUE)) {
+						if ($amount = get_post_meta($post->ID, 'amount', TRUE)) {
 							echo $json->Amount_Currency . ' ' . $amount;
+						}
+						echo '</td>';
+						echo '<td>' . $json->TRANSACTION_ID . '</td>';
+						echo '<td>' . $json->PRICING_ID . '</td>';
+						break;
+					case 'rebill':
+						echo '<td>';
+						if ($user_id = get_post_meta($post->ID, 'user_id', TRUE)) {
+							$user = get_user_by('id', $user_id);
+							if (!$user) {
+								echo __('Unreg: ', 'wp-zombaio') . ' ' . $json->username;
+							} else {
+								echo '(' . $user_id . ') ' . $user->display_name . '<br />' . $user->user_email;
+							}
 						} else {
-							echo $json->Amount_Currency . ' ' . $json->Amount;
-							echo ' - ' . __('Failed', 'wp-zombaio');
+							echo __('Unreg: ', 'wp-zombaio') . ' ' . $json->username;
+						}
+						echo '</td>';
+						echo '<td>';
+						if ($amount = get_post_meta($post->ID, 'amount', TRUE)) {
+							echo $json->Amount_Currency . ' ' . $amount;
 						}
 						echo '</td>';
 						echo '<td>' . $json->TRANSACTION_ID . '</td>';
@@ -984,7 +768,8 @@ jQuery(document).ready(function() {
 						echo '<td>' . $json->Retries . '</td>';
 						break;
 					case 'chargeback':
-						if ($user_id = get_post_meta($post->ID, 'wp_zombaio_user_id', TRUE)) {
+						echo '<td>';
+						if ($user_id = get_post_meta($post->ID, 'user_id', TRUE)) {
 							$user = get_user_by('id', $user_id);
 							if (!$user) {
 								echo __('Unreg: ', 'wp-zombaio') . ' ' . $json->username;
@@ -996,37 +781,27 @@ jQuery(document).ready(function() {
 						}
 						echo '</td>';
 						echo '<td>';
-						if ($amount = get_post_meta($post->ID, 'wp_zombaio_amount', TRUE)) {
+						if ($amount = get_post_meta($post->ID, 'amount', TRUE)) {
 							echo $json->Amount_Currency . ' ' . $amount;
-						} else {
-							echo $json->Amount_Currency . ' ' . $json->Amount;
-							echo ' - ' . __('Failed', 'wp-zombaio');
 						}
 						echo '</td>';
 						echo '<td>' . (isset($this->chargeback_codes[$json->ReasonCode]) ? $json->ReasonCode . ' - ' . $this->chargeback_codes[$json->ReasonCode] : 'Unknown') . '</td>';
 						echo '<td>' . (isset($this->chargeback_liability_code[$json->LiabilityCode]) ? $json->LiabilityCode . ' - ' . $this->chargeback_liability_code[$json->LiabilityCode] : 'Unknown') . '</td>';
 						break;
 					case 'declined':
-						if ($amount = get_post_meta($post->ID, 'wp_zombaio_amount', TRUE)) {
+						echo '<td>';
+						if ($amount = get_post_meta($post->ID, 'amount', TRUE)) {
 							echo $json->Amount_Currency . ' ' . $amount;
-						} else {
-							echo $json->Amount_Currency . ' ' . $json->Amount;
-							echo ' - ' . __('Failed', 'wp-zombaio');
 						}
 						echo '</td>';
 						echo '<td>' . $json->TRANSACTION_ID . '</td>';
 						echo '<td>' . (isset($this->decline_codes[$json->ReasonCode]) ? $json->ReasonCode . ' - ' . $this->decline_codes[$json->ReasonCode] : 'Unknown') . '</td>';
 						break;
-					case 'credit_spend':
-						$postdata = get_post($json->post_id);
-						echo '(' . $json->post_id . ') ' . $postdata->post_title . '</td>';
-						echo '<td>' . $json->credits . '</td>';
-						break;
 				}
 
 				echo '<td>' . $post->post_date . '</td>';
 
-				echo '<td class="renderRawLogData" style="display: none;">' . get_post_meta($post->ID, 'wp_zombaio_logmessage', TRUE) . '<br /><br /><textarea style="width: 400px;" rows="30" readonly="readonly">' . $post->post_content . '</textarea></td>';
+				echo '<td class="renderRawLogData" style="display: none;">' . get_post_meta($post->ID, 'logmessage', TRUE) . '<br /><br /><textarea style="width: 400px;" rows="30" readonly="readonly">' . $post->post_content . '</textarea></td>';
 
 				echo '</tr>';
 			}
@@ -1054,7 +829,7 @@ jQuery(document).ready(function() {
 jQuery(document).ready(function() {
 	jQuery(\'#wp_zombaio_tabs\').tabs();
 	jQuery(\'.renderRawLog\').click(function() {
-		jQuery(this).find(\'.renderRawLogData\').clone().dialog({width: 440, modal: true});
+		jQuery(this).find(\'.renderRawLogData\').dialog({width: 440, modal: true});
 	});
 });
 </script>
@@ -1067,8 +842,112 @@ jQuery(document).ready(function() {
 	Guide Page
 	*/
 	function admin_page_guide() {
-		require_once(plugin_dir_path(__FILE__) . 'wp_zombaio_guide.php');
-		new wp_zombaio_guide();
+		$this->admin_page_top();
+
+		echo __('
+<h3>Zombaio Join Form</h3>
+<p>Zombaio supports two methods of joining your website</p>
+<p>Under Website Management, when viewing the Settings for your Site, the <strong>Zombaio Join Form Template</strong> has two options</p>
+<h4>Option 1 - Simple Credit Card Template</h4>
+<p>This method means on your site, for each pricing structure, you&#39;ll need multiple Join Form Widgets/Shortcodes, on your WordPress blog, to direct the user to Pay</p>
+<p>This is good for when you want to make a designed entry/lading page on your blog/site</p>
+<h4>Option 2 - e-Ticket Selection Template</h4>
+<p>With this method, any Join Form URL, results in the same form</p>
+<p>When arriving at Zombaio, users can then choose which Subscription/Package to join, so in this case you only need a single Join Form Widget/Shortcode on your WordPress Blog</p>
+<p>The choice is up to you</p>
+
+<h3>Google Analytics</h3>
+<p>If you add your GA Property ID, you can track if users are navigating thru your site, and leaving before paying</p>
+<p>This will be handy when considering your pricing structure</p>
+
+<h3>Join Form Image</h3>
+<p>It is a good idea to upload your Site Logo to Zombaio for use on Join Forms, helps remind users that whilst on the Zombaio Website paying, they are joining your Website!</p>
+', 'wp-zombaio');
+
+$this->admin_page_spacer(__('Login Control', 'wp-zombaio'));
+
+		echo __('
+<p>With Login Control enabled, only Logged In Users (and thus people who have paid), can access your content</p>
+<p>You can choose where users are directed to, the default is the WP-Login.php page, but since WP Zomabio does not hook/work on the standard registration page, users cannot sign up from here</p>
+<p>So normally you shoule have <i>Anyone can Register</i> disabled</p>
+<p>You can pick a page to send users to, this page should containt a Login Form and a Register Form (or at least a link to your Zombaio Join Form)</p>
+<p>Zombaio Rules (or at least advice) that you should put a Zombaio Seal on your site somewhere, this is a good page to place it</p>
+<p>You can do something like:</p>', 'wp-zombaio');
+		echo '<textarea readonly="readonly" style="width: 600px;" rows="2">[zombaio_join align="left" width="300" join_url="JOINURL" buttonalign="center"]PRICING[/zombaio_join]
+[zombaio_seal align="right"]</textarea>';
+		echo __('
+<p>Swap JOINURL for your Zombaio Pricing Structure, Join Form URL, and PRICING for some Introdutory Text, such as the Price and Membership Terms</p>
+<p>That makes a nice Registration Landing Page</p>
+', 'wp-zombaio');
+		echo sprintf(__('You can see an <a href="%s" target="_blank">example here</a>', 'wp-zombaio'), 'http://dev.barrycarlyon.co.uk/?page_id=69');
+
+$this->admin_page_spacer(__('Site Seal', 'wp-zombaio'));
+
+		echo sprintf(__('
+<p>You can get your Seal Code as follows:
+	<ul class="disc">
+		<li>Login to <a href="%s">ZOA</a></li>
+		<li>Navigate to:
+			<ul class="disc">
+				<li>Tools</li>
+				<li>Pricing Structure</li>
+			</ul>
+		</li>
+		<li>Then Manage/Edit any Pricing Structure for your site</li>
+		<li>Then in the HTML Button Field, copy everything from and including &lt;!-- START ZOMBAIO SEAL CODE --&gt; to &lt;!-- END ZOMBAIO SEAL CODE --&gt;</li>
+		<li>Paste that into this field</li>
+		<li><a href="#nowhere" onclick="%s">View a ScreenShot/Example</a>, the Seal Code is Hightlighted</li>
+	</ul>
+</p>', 'wp-zombaio'), 'https://secure.zombaio.com/ZOA/', 'jQuery(\'#wp_zombaio_sealshot\').dialog({width: 720});');
+
+echo '
+<div id="wp_zombaio_sealshot" style="display: none;">
+	<img src="' . plugin_dir_url(__FILE__) . 'img/seal_code.png" alt="' . __('Seal Screenshot', 'wp-zombaio') . '" style="border: 1px solid #000000;" />
+</div>
+';
+
+$this->admin_page_spacer(__('Running a Membership Site', 'wp-zombaio'));
+
+echo sprintf(__('<p>For more thoughts and advice on Running a membership site, check out the <a href="%s" target="_blank">Your Members Blog</a></p>', 'wp-zombaio'), 'http://blog.yourmembers.co.uk/');
+
+$this->admin_page_spacer(__('Caching, (Plugins or Otherwise) and CloudFlare', 'wp-zombaio'));
+
+echo sprintf(__('<p>If you are running anything Caching related, (which you probably shouldn&#39;t on a <a href="%s" target="_blank">membership site</a>), you may need to Whitelist Zombaios Notifications IP Addresses, so they bypass the potential block</p>', 'wp-zombaio'), 'http://blog.yourmembers.co.uk/2012/your-members-and-caching/');
+echo sprintf(__('<h4>Known Caching Plugins and How to Bypass</h4>
+
+<ul class="disc">
+<li><strong>CloudFlare Whitelisting</strong>, visit <a href="%s" target="_blank">Threat Control</a> add Custom Rule, and Trust all the Zombaio IP&#39;s</li>
+<li><strong>Misc</strong>, generally you should allow all Query Strings containing <i>ZombaioGWPass</i> to Bypass any and all Caching</li>
+</ul>
+
+<h5>Want to add a Caching Bypass Solution to this list, <a href="%s">Drop me a Line</a></h5>
+
+<h4>Zombaio IPs</h4>
+<p>You can load/fetch the Current Zombaio Known IP Addresses</p>
+', 'wp-zombaio'), 'https://www.cloudflare.com/threat-control', 'http://barrycarlyon.co.uk/wordpress/contact/');
+
+echo '<a href="#load" id="loadips" class="button-secondary">' . __('Load IP&#39;s', 'wp-zombaio') . '</a> ' . __('or', 'wp-zombaio') . ' <a href="#load" id="loadcsvips" class="button-secondary">' . __('Load CSV List of IP&#39;s', 'wp-zombaio') . '</a>';
+
+echo '
+<div id="loadipsoutput"></div>
+
+<script type="text/javascript">
+jQuery(document).ready(function() {
+	jQuery(\'#loadips\').click(function() {
+		jQuery.get(\'' . home_url('?wp_zombaio_ips=1') . '\', function(data) {
+			jQuery(\'#loadipsoutput\').html(data).dialog({height: 400});
+		})
+	});
+	jQuery(\'#loadcsvips\').click(function() {
+		jQuery.get(\'' . home_url('?wp_zombaio_ips=1&csv=1') . '\', function(data) {
+			jQuery(\'#loadipsoutput\').html(data).dialog({height: 240});
+		})
+	});
+});
+</script>
+';
+
+		$this->admin_page_bottom();
 	}
 
 	/**
@@ -1254,6 +1133,11 @@ jQuery(document).ready(function() {
 
 					$user_id = $wpdb->get_var($query);
 					// should fire a user.delete after true fail
+
+//					if (!$user_id) {
+//						echo 'USER_DOES_NOT_EXIST';
+//						exit;
+//					}
 					$logmsg = 'User Card Rebill was Declined';
 				} else {
 					$user_id = '';
@@ -1262,48 +1146,10 @@ jQuery(document).ready(function() {
 				break;
 			}
 			case 'user.addcredits': {
-				// dont match on email Identifier is more useful
-				// sicne a differnet persons details could be used to buy credits for the user in the Identifier
-				$id = isset($_GET['Identifier']) ? $_GET['Identifier'] : FALSE;
-				$credits_purchased = isset($_GET['Credits']) ? $_GET['Credits'] : FALSE;
-				if ($id && $credits_purchased) {
-					$user = get_user_by('id', $id);
-					if ($user) {
-						// validate hash
-						$myhash = md5($id . $this->options->gw_pass . $credits_purchased . $this->options->site_id);
-						$theirhash = isset($_GET['Hash']) ? $_GET['Hash'] : FALSE;
-						if ($myhash == $theirhash) {
-							$user_id = $id;
-
-							// get current add add away
-							$credits = get_user_meta($user_id, 'wp_zombaio_credits', TRUE);
-							if (!$credits) {
-								$credits = 0;
-							}
-							$credits += $credits_purchased;
-
-							// update
-							update_user_meta($user_id, 'wp_zombaio_credits', $credits);
-							break;
-						} else {
-							header('HTTP/1.0 401 Unauthorized');
-							echo 'ERROR';
-							exit;
-						}
-					} else {
-						header('HTTP/1.0 401 Unauthorized');
-						echo 'ERROR';
-						exit;
-					}
-				} else {
-					header('HTTP/1.0 401 Unauthorized');
-					echo 'ERROR';
-					exit;
-				}
 			}
 			default: {
 				header('HTTP/1.0 401 Unauthorized');
-				echo '<h1>Zombaio Gateway 1.1</h1><h3>Authentication failed. No Idea: ' . $action . '</h3>';
+				echo '<h1>Zombaio Gateway 1.1</h1><h3>Authentication failed. No Idea</h3>';
 				exit;
 			}
 		}
@@ -1316,9 +1162,9 @@ jQuery(document).ready(function() {
 		exit;
 	}
 	
-	/**
-	Payment Processor utility
-	*/
+	private function abort() {
+	}
+	
 	private function log() {
 		$username = isset($_GET['username']) ? ' - ' . $_GET['username'] : '';
 		$post = array(
@@ -1329,37 +1175,27 @@ jQuery(document).ready(function() {
 		);
 		$r = @wp_insert_post($post);
 
-		update_post_meta($r, 'wp_zombaio_json_packet', json_encode($_GET));
+		update_post_meta($r, 'json_packet', json_encode($_GET));
 
 		return $r;
 	}
 	private function logresult($logid, $logmsg, $user_id) {
-		update_post_meta($logid, 'wp_zombaio_logmessage' , $logmsg);
-		update_post_meta($logid, 'wp_zombaio_user_id', $user_id);
+		update_post_meta($logid, 'logmessage' , $logmsg);
+		update_post_meta($logid, 'user_id', $user_id);
 		if (isset($_GET['Amount'])) {
-			update_post_meta($logid, 'wp_zombaio_amount', $_GET['Amount']);
-		}
-		if (isset($_GET['Credits'])) {
-			update_post_meta($logid, 'wp_zombaio_credits', $_GET['Credits']);
-		}
-		if (isset($_GET['credits'])) {
-			update_post_meta($logid, 'wp_zombaio_credits', $_GET['credits']);
+			update_post_meta($logid, 'amount', $_GET['Amount']);
 		}
 		return;
 	}
 	
 	private function notifyadmin($logid, $logmsg) {
-		if (!$this->options->notify_enable) {
-			return;
-		}
 		// notify admin
 		$subject = 'WP Zombaio: Payment Result';
 		$message = 'A Payment has been processed' . "\n"
 			. 'The Result was: ' . $logmsg . "\n"
 			. 'Full Log: ' . print_r($_GET, TRUE) . "\n"
 			. 'Love WP Zombaio';
-		$target = !empty($this->options->notify_target) ? $this->options->notify_target : get_option('admin_email');
-		@wp_mail($target, $subject, $message);
+		@wp_mail(get_option('admin_email'), $subject, $message);
 		return;
 	}
 
@@ -1395,40 +1231,20 @@ jQuery(document).ready(function() {
 		register_widget('wp_zombaio_seal');
 		register_widget('wp_zombaio_login');
 //		register_widget('wp_zombaio_registerlogin');
-		register_widget('wp_zombaio_credits');
 	}
 
-	/**
-	Dashboard
-	*/
-	public function wp_dashboard_setup() {
-		require_once(plugin_dir_path(__FILE__) . 'wp_zombaio_dashboard.php');
-		new wp_zombaio_dashboard();
-	}
 
 	/**
-
-
-
-
 	FrontEnd
-
-
-
-
 	*/
 	public function frontend() {
 		add_shortcode('zombaio_seal', array($this, 'shortcode_zombaio_seal'));
 		add_shortcode('zombaio_join', array($this, 'zombaio_join'));
 		add_shortcode('zombaio_login', array($this, 'zombaio_login'));
 
-		add_shortcode('zombaio_add_credits', array($this, 'zombaio_add_credits'));
-
 		add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
 
 		add_action('template_redirect', array($this, 'template_redirect'));
-
-		add_filter('the_content', array($this, 'post_purchasable'));
 	}
 
 	/**
@@ -1439,75 +1255,56 @@ jQuery(document).ready(function() {
 			$redirect = FALSE;
 
 			if ($this->options->redirect_target) {
-				$target_url = get_permalink($this->options->redirect_target);
+				$target = $this->options->redirect_target;
+				$target_url = get_permalink($target);
 			} else {
 				$target = TRUE;
 				$target_url = home_url('wp-login.php');
 			}
 
+			// valid target?
 			if ($target) {
-				if (is_singular() || is_single() || is_page()) {
-					if (get_the_ID() != $target) {
-						$redirect = TRUE;
+				// dev hook is page excluded?
+				if (is_home() && !$this->options->redirect_home_page) {
+					$target = false;
+				} else if (is_singular() || is_single() || is_page()) {
+					$meta = get_post_meta(get_the_ID(), 'wp_zombaio_redirect_disable', true);
+					if ($meta == '1') {
+						$target = false;
 					}
-				} else {
-					$redirect = TRUE;
 				}
 
-				if ($redirect) {
-					header('Location: ' . $target_url);
-					exit;
+				if ($target) {
+					if (is_singular() || is_single() || is_page()) {
+						if (get_the_ID() != $target) {
+							$redirect = TRUE;
+						}
+					} else {
+						$redirect = TRUE;
+					}
+
+					if ($redirect) {
+						header('Location: ' . $target_url);
+						exit;
+					}
 				}
 			}
 		}
 	}
 	public function wp_authenticate_user($user) {
-		if (is_wp_error($user)) {
-			return $user;
-		}
 		if (get_user_meta($user->ID, 'wp_zombaio_delete', TRUE)) {
 			$err = new WP_Error();
-			$err->add('wp_zombaio_error', __('Access Blocked: Zombaio Failed Rebill or Access Suspended', 'wp-zombaio'));
+			$err->add('wp_zombaio_error', 'Zombaio Failed Rebill');
 			return $err;
 		}
 		return $user;
 	}
-	public function wp_authenticate_user_check() {
-		global $pagenow, $current_user;
-		$array = array('wp-login.php', 'wp-register.php');
-		if (!in_array($pagenow, $array) && is_user_logged_in()) {
-			if (get_user_meta($current_user->ID, 'wp_zombaio_delete', TRUE)) {
-				// is blocked during login occurance
-				wp_clear_auth_cookie();
-				wp_redirect(get_option('siteurl') . '/wp-login.php');
-				exit;
-			}
-		}
-	}
 
 	/**
-	Menus
-	*/
-	function menus() {
-		register_nav_menus(array(
-			'logged_out_navigation' => __('Zombaio Logged Out Navigation', 'wp-zombaio'),
-			'logged_in_navigation' => __('Zombaio Logged In Navigation', 'wp-zombaio'),
-		));
-	}
-	function menu_select($args) {
-		if (is_user_logged_in()) {
-			$args['theme_location'] = 'logged_in_navigation';
-		} else {
-			$args['theme_location'] = 'logged_out_navigation';
-		}
-		return $args;
-	}
-
-	/**
-	script/style
+	script
 	*/
 	public function wp_enqueue_scripts() {
-		wp_enqueue_style('wp_zombaio_css', plugin_dir_url(__FILE__) . 'assets/wp_zombaio.css');
+		wp_enqueue_style('wp_zombaio_css', plugin_dir_url(__FILE__) . basename(__FILE__) . '?do=css');
 	}
 	
 	/**
@@ -1527,9 +1324,6 @@ jQuery(document).ready(function() {
 		$html = '';
 
 		$join_url = isset($args['join_url']) ? $args['join_url'] : FALSE;
-		$approve_url = isset($args['approve_url']) ? $args['approve_url'] : false;
-		$decline_url = isset($args['decline_url']) ? $args['decline_url'] : false;
-		$submit = isset($args['submit']) && $args['submit'] ? $args['submit'] : __('Join', 'wp-zombaio');
 
 		if ($join_url) {
 			if (FALSE !== strpos($join_url, 'zombaio.com')) {
@@ -1551,12 +1345,7 @@ jQuery(document).ready(function() {
 
 				$html .= '<p class="jointext">' . $content . '</p>';
 
-				if ($approve_url) {
-					$html .= '<input type="hidden" name="return_url_approve" value="' . $approve_url . '" />';
-				}
-				if ($decline_url) {
-					$html .= '<input type="hidden" name="return_url_decline" value="' . $decline_url . '" />';
-				}
+				$submit = isset($args['submit']) && $args['submit'] ? $args['submit'] : 'Join';
 
 				$html .= '<div class="' . $buttonalign . '" style="width: 50px;">';
 				$html .= '<input type="submit" name="zomPay" value="' . $submit . '" />';
@@ -1569,209 +1358,204 @@ jQuery(document).ready(function() {
 	}
 
 	public function zombaio_login() {
-		if (is_user_logged_in()) {
-			return '';
-		} else {
-			return wp_login_form(array('echo' => FALSE));
-		}
-	}
-
-	public function zombaio_add_credits($args = array(), $content = '') {
-		if (!is_user_logged_in()) {
-			return '';
-		}
-		$html = '';
-
-		$join_url = isset($args['join_url']) ? $args['join_url'] : false;
-		$approve_url = isset($args['approve_url']) ? $args['approve_url'] : get_permalink();
-		$decline_url = isset($args['decline_url']) ? $args['decline_url'] : get_permalink();
-		$submit = isset($args['submit']) ? $args['submit'] : __('Click to buy credits', 'wp_zombaio');
-		$selector = isset($args['selector']) ? $args['selector'] : false;
-
-		if ($join_url) {
-			if (FALSE !== strpos($join_url, 'zombaio.com')) {
-				list($crap, $zombaio, $com_crap, $id, $zom) = explode('.', $args['join_url']);
-			} else {
-				$id = $args['join_url'];
-			}
-
-			if ($id) {
-				$align = isset($args['align']) ? 'align' . $args['align'] : 'aligncenter';
-				$style = isset($args['width']) ? 'width: ' . $args['width'] . 'px;' : '';
-				$buttonalign = isset($args['buttonalign']) ? 'align' . $args['buttonalign'] : 'alignright';
-
-				$current_user = wp_get_current_user();
-
-				$html .= '<form action="https://secure.zombaio.com/?' . $this->options->site_id . '.' . $id . '.ZOM" method="post" class="wp_zombaio_form ' . $align . '" style="' . $style . '">';
-				$html .= '<fieldset>';
-				$html .= $content;
-				if ($selector) {
-//				$html .
-				}
-				$html .= '<input type="hidden" name="identifier" value="' . $current_user->ID . '" />';
-				$html .= '<input type="hidden" name="Email" value="' . $current_user->user_email . '" />';
-				$html .= '<input type="hidden" name="approve_url" value="' . $approve_url . '" />';
-				$html .= '<input type="hidden" name="decline_url" value="' . $decline_url . '" />';
-				$html .= '<div class="' . $buttonalign . '">';
-				$html .= '<input type="submit" value="' . $submit . '" />';
-				$html .= '</div>';
-				$html .= '</fieldset>';
-				$html .= '</form>';
-			}
-		}
-
-		return $html;
-	}
-
-	/**
-	Spending Credits
-	*/
-	public function post_purchasable($content) {
-		$user = wp_get_current_user();
-		if (strlen($post_cost_credits = get_post_meta(get_the_ID(), 'wp_zombaio_credit_cost', TRUE))) {
-			$user_credits = get_user_meta($user->ID, 'wp_zombaio_credits', TRUE);
-			// make sure we have a value
-			if (!strlen($user_credits)) {
-				$user_credits = 0;
-			}
-
-			$message = '';
-
-			if ($_POST && isset($_POST['wp_zombaio_process_purchase'])) {
-				if (wp_verify_nonce($_POST['wp_zombaio_credits_spend'], plugin_basename(__FILE__))) {
-					// check for already have access
-					if (!$this->hasPurchased()) {
-						// go for purchase
-						if ($user_credits >= $post_cost_credits) {
-							// subtract
-							$user_credits -= $post_cost_credits;
-							// update credits
-							update_user_meta($user->ID, 'wp_zombaio_credits', $user_credits);
-							// log transaction
-							$data = array(
-								'Action'	=> 'credit_spend',
-								'username'	=> $user->user_login,
-								'post_id'	=> get_the_ID(),
-								'credits'	=> $post_cost_credits,
-								'amount'	=> $post_cost_credits,
-								'type'		=> get_post_meta(get_the_ID(), 'wp_zombaio_credit_cost_type', TRUE),
-								'user_id'	=> $user->ID
-							);
-							if (get_post_meta(get_the_ID(), 'wp_zombaio_credit_cost_type', TRUE) == 'timed') {
-								$limit = get_post_meta(get_the_ID(), 'wp_zombaio_credit_cost_time_qty', TRUE);
-								$units = get_post_meta(get_the_ID(), 'wp_zombaio_credit_cost_time_units', TRUE);
-
-								$multiples = array(
-									'hours'		=>	3600,
-									'days'		=>	86400,
-									'weeks'		=>	604800,
-								);
-
-								$expire = time() + ($limit * $multiples[$units]);
-								$expire = date(get_option('time_format') . ' ' . get_option('date_format'), $expire);
-								$data = array_merge($data, array('expire' => $expire));
-							}
-							$logmsg = 'Credit Spending';
-							// build $_GET
-							$_GET = array_merge($_GET, $data);
-							$logid = $this->log();
-							$this->logresult($logid, $logmsg, $user->ID);
-							$this->notifyadmin($logid, $logmsg);
-
-							update_post_meta($logid, 'wp_zombaio_post_id', get_the_ID());
-							update_post_meta($logid, 'wp_zombaio_credit_cost_type', get_post_meta(get_the_ID(), 'wp_zombaio_credit_cost_type', TRUE));
-						} else {
-							$message = '<p>' . __('You don&#39;t have enough Credits', 'wp-zombaio') . '</p>';
-						}
-					}
-				}
-			}
-
-			// post is purchasble
-			if ($expires = $this->hasPurchased()) {
-				// timer?
-				if (get_post_meta(get_the_ID(), 'wp_zombaio_credit_cost_type', TRUE) == 'timed') {
-					$multiples = array(
-						'hours'		=>	3600,
-						'days'		=>	86400,
-						'weeks'		=>	604800,
-					);
-
-					if ($expires < 3600) {
-						$time_left = date('i:s', $expires);
-					} else if ($expires < 86400) {
-						// hours left
-						$time_left = ceil($expires / 3600) . ':' . date('i:s', $expires);
-					} else {
-						// days left
-						$time_left = ceil($expires / 86400);
-					}
-
-					// timed access
-					$time_left = '<div class="wp_zombaio_time_left"><p>' . sprintf(__('Your access expires in %s', 'wp-zombaio'), $time_left) . '</p></div>';
-					$content = $time_left . $content;
-				}
-				return $content;
-			} else {
-				// not purchased
-				$content = '<form action="" method="post">';
-				$content .= wp_nonce_field(plugin_basename(__FILE__), 'wp_zombaio_credits_spend', TRUE, FALSE);
-				$content .= '<input type="hidden" name="wp_zombaio_process_purchase" value="' . get_the_ID() . '" />';
-				$content .= '<p>' . __('This Post is Purchasble', 'wp-zombaio') . '</p>';
-				$content .= $message;
-				$content .= '<p>' . sprintf(__('You have %s Credits', 'wp-zombaio'), $user_credits) . '</p>';
-				$content .= '<input type="submit" value="' . sprintf(__('Buy Now %s Credits', 'wp-zombaio'), $post_cost_credits) . '" ' . ($user_credits >= $post_cost_credits ? '' : 'disabled="disabled"') . ' />';
-				$content .= '</form>';
-			}
-		}
-		return $content;
-	}
-	private function hasPurchased() {
-		// purchase check
-		global $wpdb, $current_user;
-		$query = 'SELECT p1.post_id AS post_id
-			FROM ' . $wpdb->postmeta . ' p1
-			LEFT JOIN ' . $wpdb->postmeta . ' p2 ON p2.post_id = p1.post_id
-			WHERE p1.meta_key = \'wp_zombaio_post_id\'
-			AND p1.meta_value = \'' . get_the_ID() . '\'
-			AND p2.meta_key = \'wp_zombaio_user_id\'
-			AND p2.meta_value = \'' . $current_user->ID . '\'
-			ORDER BY p1.meta_id DESC
-			LIMIT 1
-			';
-		// order by and limit to only get the last purchase (in the case of timed)
-		$log_id = $wpdb->get_var($query);
-		if ($log_id) {
-			$log = get_post($log_id);
-			// entry found
-			// timer check
-			if (get_post_meta(get_the_ID(), 'wp_zombaio_credit_cost_type', TRUE) == 'timed') {
-				$limit = get_post_meta(get_the_ID(), 'wp_zombaio_credit_cost_time_qty', TRUE);
-				$units = get_post_meta(get_the_ID(), 'wp_zombaio_credit_cost_time_units', TRUE);
-
-				$multiples = array(
-					'hours'		=>	3600,
-					'days'		=>	86400,
-					'weeks'		=>	604800,
-				);
-
-				$limit = $limit * $multiples[$units];
-
-				$log_time = strtotime($log->post_date);
-				$end = $log_time + $limit;
-				if ($end > time()) {
-					return $end - time();
-					return $end;
-				} else {
-					// access expired
-					return FALSE;
-				}
-			}
-			return true;
-		}
-		return false;
+		return wp_login_form(array('echo' => FALSE));
 	}
 }
 
-// FIRE IN THE HOLE
+$do = isset($_GET['do']) ? $_GET['do'] : FALSE;
+if ($do == 'css') {
+	header('Content-Type: text/css');
+	echo '
+.wp_zombaio_form, .wp_zombaio_form label, .wp_zombaio_form p { display: block; clear: both; }
+.wp_zombaio_form label input { float: right; }
+.wp_zombaio_form .jointext { text-align: center; margin-bottom: 0px; }
+';
+	exit;
+}
+
 new wp_zombaio();
+
+/**
+widget
+*/
+class wp_zombaio_widget extends wp_widget {
+	function wp_zombaio_widget() {
+		$this->widgetclassname = 'widget_wp_zombaio_widget';
+
+		$widget_ops = array('classname' => $this->widgetclassname, 'description' => __('Use this widget to add a Join Form to your SideBar', 'wp-zombaio'));
+		$this->WP_Widget($this->widgetclassname, __('WP Zombaio Join Widget', 'wp-zombaio'), $widget_ops);
+		$this->alt_option_name = $this->widgetclassname;
+
+		add_action('save_post', array(&$this, 'flush_widget_cache'));
+		add_action('deleted_post', array(&$this, 'flush_widget_cache'));
+		add_action('switch_theme', array(&$this, 'flush_widget_cache'));
+
+		parent::__construct(false, __('WP Zombaio Join Widget', 'wp-zombaio'));
+	}
+
+	function widget($args, $instance) {
+		if (is_user_logged_in()) {
+			return '';
+		}
+		$cache = wp_cache_get($this->widgetclassname, 'widget');
+		if (!is_array($cache)) {
+			$cache = array();
+		}
+		if (!isset($args['widget_id'])) {
+			$args['widget_id'] = null;
+		}
+		if (isset($cache[$args['widget_id']])) {
+			echo $cache[$args['widget_id']];
+			return;
+		}
+
+		ob_start();
+		extract($args);
+		extract($instance);
+
+		echo $before_widget;
+		echo $before_title . $title . $after_title;
+		echo do_shortcode('[zombaio_join join_url="' . $join_url . '" submit="' . $submit . '"]' . $message . '[/zombaio_join]');
+		echo $after_widget;
+
+		$cache[$args['widget_id']] = ob_get_flush();
+		wp_cache_set($this->widgetclassname, $cache, 'widget');
+	}
+
+	function update($new_instance, $old_instance) {
+		$instance = $old_instance;
+		$instance['title'] = $new_instance['title'];
+		$instance['join_url'] = $new_instance['join_url'];
+		$instance['submit'] = $new_instance['submit'];
+		$instance['message'] = $new_instance['message'];
+		return $instance;
+	}
+	function form($instance) {
+		$defaults = array(
+			'title'		=> 'Join the Site',
+			'join_url'	=> '',
+			'submit'	=> 'Join',
+			'message'	=> '',
+		);
+		$instance = wp_parse_args((array)$instance, $defaults);
+
+		echo '<label for="' . $this->get_field_id('title') . '">' . __('Title:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('title') . '" id="' . $this->get_field_id('title') . '" value="' . $instance['title'] . '" /></label>';
+		echo '<br />';
+		echo '<label for="' . $this->get_field_id('join_url') . '">' . __('Join Form URL:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('join_url') . '" id="' . $this->get_field_id('join_url') . '" value="' . $instance['join_url'] . '" /></label>';
+		echo '<br />';
+		echo '<label for="' . $this->get_field_id('message') . '">' . __('Intro Text:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('message') . '" id="' . $this->get_field_id('message') . '" value="' . $instance['message'] . '" /></label>';
+		echo '<br />';
+		echo '<label for="' . $this->get_field_id('submit') . '">' . __('Submit Button:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('submit') . '" id="' . $this->get_field_id('submit') . '" value="' . $instance['submit'] . '" /></label>';
+		echo '<br />';
+	}
+
+	function flush_widget_cache() {
+		wp_cache_delete($this->widgetclassname, 'widget');
+	}
+}
+
+class wp_zombaio_seal extends wp_widget {
+	function wp_zombaio_seal() {
+		$this->widgetclassname = 'widget_wp_zombaio_seal';
+
+		$widget_ops = array('classname' => $this->widgetclassname, 'description' => __('Use this widget to add a Zombaio Site Seal to your SideBar', 'wp-zombaio'));
+		$this->WP_Widget($this->widgetclassname, __('WP Zombaio Seal Widget', 'wp-zombaio'), $widget_ops);
+		$this->alt_option_name = $this->widgetclassname;
+
+		add_action('save_post', array(&$this, 'flush_widget_cache'));
+		add_action('deleted_post', array(&$this, 'flush_widget_cache'));
+		add_action('switch_theme', array(&$this, 'flush_widget_cache'));
+
+		parent::__construct(false, __('WP Zombaio Seal Widget', 'wp-zombaio'));
+	}
+
+	function widget($args, $instance) {
+		$cache = wp_cache_get($this->widgetclassname, 'widget');
+		if (!is_array($cache)) {
+			$cache = array();
+		}
+		if (!isset($args['widget_id'])) {
+			$args['widget_id'] = null;
+		}
+		if (isset($cache[$args['widget_id']])) {
+			echo $cache[$args['widget_id']];
+			return;
+		}
+
+		ob_start();
+		extract($args);
+		extract($instance);
+
+		echo $before_widget;
+		echo do_shortcode('<br /><center>[zombaio_seal]</center>');
+		echo $after_widget;
+
+		$cache[$args['widget_id']] = ob_get_flush();
+		wp_cache_set($this->widgetclassname, $cache, 'widget');
+	}
+
+	function flush_widget_cache() {
+		wp_cache_delete($this->widgetclassname, 'widget');
+	}	
+}
+
+class wp_zombaio_login extends wp_widget {
+	function wp_zombaio_login() {
+		$this->widgetclassname = 'widget_wp_zombaio_login';
+
+		$widget_ops = array('classname' => $this->widgetclassname, 'description' => __('Use this widget to add a Login Form to your SideBar', 'wp-zombaio'));
+		$this->WP_Widget($this->widgetclassname, __('WP Zombaio Login Widget', 'wp-zombaio'), $widget_ops);
+		$this->alt_option_name = $this->widgetclassname;
+
+		add_action('save_post', array(&$this, 'flush_widget_cache'));
+		add_action('deleted_post', array(&$this, 'flush_widget_cache'));
+		add_action('switch_theme', array(&$this, 'flush_widget_cache'));
+
+		parent::__construct(false, __('WP Zombaio Login Widget', 'wp-zombaio'));
+	}
+
+	function widget($args, $instance) {
+		$cache = wp_cache_get($this->widgetclassname, 'widget');
+		if (!is_array($cache)) {
+			$cache = array();
+		}
+		if (!isset($args['widget_id'])) {
+			$args['widget_id'] = null;
+		}
+		if (isset($cache[$args['widget_id']])) {
+			echo $cache[$args['widget_id']];
+			return;
+		}
+
+		ob_start();
+		extract($args);
+		extract($instance);
+
+		echo $before_widget;
+		echo $before_title . $title . $after_title;
+		wp_login_form();
+		echo $after_widget;
+
+		$cache[$args['widget_id']] = ob_get_flush();
+		wp_cache_set($this->widgetclassname, $cache, 'widget');
+	}
+
+	function update($new_instance, $old_instance) {
+		$instance = $old_instance;
+		$instance['title'] = $new_instance['title'];
+		return $instance;
+	}
+	function form($instance) {
+		$defaults = array(
+			'title'		=> 'Login',
+		);
+		$instance = wp_parse_args((array)$instance, $defaults);
+
+		echo '<label for="' . $this->get_field_id('title') . '">' . __('Title:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('title') . '" id="' . $this->get_field_id('title') . '" value="' . $instance['title'] . '" /></label>';
+		echo '<br />';
+	}
+
+	function flush_widget_cache() {
+		wp_cache_delete($this->widgetclassname, 'widget');
+	}	
+}
