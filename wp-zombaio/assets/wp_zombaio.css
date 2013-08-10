@@ -1,9 +1,0 @@
-/*
-* $Id: wp_zombaio.css 614297 2012-10-18 22:50:14Z BarryCarlyon $
-* $Revision: 614297 $
-* $Date: 2012-10-18 23:50:14 +0100 (Thu, 18 Oct 2012) $
-*/
-
-.wp_zombaio_form, .wp_zombaio_form label, .wp_zombaio_form p { display: block; clear: both; }
-.wp_zombaio_form label input { float: right; }
-.wp_zombaio_form .jointext { text-align: center; margin-bottom: 0px; }
