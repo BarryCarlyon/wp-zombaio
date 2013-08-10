@@ -64,7 +64,7 @@ For Extra help/support or otherwise, either use the [WordPress Support Forum](ht
 
 ## Changelog ##
 
-### 1.1.0 ###
+### 1.1.0 (Not finished) ###
 * If Logged in don't show login form, both Widet and ShortCode
 * Added ability to control WordPress Menus (Logged In/Logged Out), this can be enabled/disabled in case your Theme Provides this option or you don't need it
 * Added Settings Upgrader
