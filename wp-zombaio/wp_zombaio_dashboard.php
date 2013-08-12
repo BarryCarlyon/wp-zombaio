@@ -11,9 +11,11 @@ class wp_zombaio_dashboard {
     Setup
     */
     function __construct() {
-        wp_add_dashboard_widget('wp_zombaio_signup_stats', __('WP Zombaio SignUp Stats', 'wp-zombaio'), array($this, 'signup_stats'), array($this, 'signup_stats_config'));
-        wp_add_dashboard_widget('wp_zombaio_credit_stats', __('WP Zombaio Credits Stats', 'wp-zombaio'), array($this, 'credit_stats'), array($this, 'credit_stats_config'));
-        wp_add_dashboard_widget('wp_zombaio_earnings_stats', __('WP Zombaio Earnings Stats', 'wp-zombaio'), array($this, 'earnings_stats'), array($this, 'earnings_stats_config'));
+        if (current_user_can('activate_plugins')) {
+            wp_add_dashboard_widget('wp_zombaio_signup_stats', __('WP Zombaio SignUp Stats', 'wp-zombaio'), array($this, 'signup_stats'), array($this, 'signup_stats_config'));
+            wp_add_dashboard_widget('wp_zombaio_credit_stats', __('WP Zombaio Credits Stats', 'wp-zombaio'), array($this, 'credit_stats'), array($this, 'credit_stats_config'));
+            wp_add_dashboard_widget('wp_zombaio_earnings_stats', __('WP Zombaio Earnings Stats', 'wp-zombaio'), array($this, 'earnings_stats'), array($this, 'earnings_stats_config'));
+        }
     }
 
     public function signup_stats() {

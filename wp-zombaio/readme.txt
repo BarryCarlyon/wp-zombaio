@@ -77,17 +77,26 @@ For Extra help/support or otherwise, either use the [WordPress Support Forum](ht
 == Changelog ==
 
 = 1.1.0 =
-* If Logged in don't show login form, both Widet and ShortCode
+* If Logged in don't show login form, apply to both Widget and ShortCode
 * Added ability to control WordPress Menus (Logged In/Logged Out), this can be enabled/disabled in case your Theme Provides this option or you don't need it
 * Added Settings Upgrader
+
 * Show the User their Subscription ID and current Credits balance on the Profile Edit Page
+
 * Support Credit Purchase via Zombaio and crediting users with Credits, as a shortcode and sidebar widget
-* You can change a users current Credit Balance
+* You can change a users current Credit Balance (gift a user some credits)
 * Support Post/Page purchase via Credits, Items purchased can be set to be one off purchase, or timed access
+
 * Manually Suspend a user
-* Graphs!
-* Ability to enable/disable email copies and change the target email address for them
+* Graphs! Each graph has a customisable date range.
+
+* Ability to enable/disable email notifications and change the target email address for them
+
 * Added Approval and Decline URL's as arguments to both the shortcode and widget for Join Form
+
+* Added useful data to the Users list (see the 11th Screenshot - Updating Users - Table).
+* Fix the wp-login.php redirect to support home_url being different to site_url
+* Cleaned up the guide and the wizard, and added some screenshots to help quick start setup
 
 = 1.0.6 =
 * At the request of Sam Rockhard owner of New Market Media, added the ability to unlock pages

@@ -1633,7 +1633,10 @@ jQuery(document).ready(function() {
     */
     public function post_purchasable($content) {
         $user = wp_get_current_user();
-        if (strlen($post_cost_credits = get_post_meta(get_the_ID(), 'wp_zombaio_credit_cost', true))) {
+
+        $post_cost_credits = get_post_meta(get_the_ID(), 'wp_zombaio_credit_cost', true);
+        if ($post_cost_credits > 0) {
+            // it has a +ve fee
             $user_credits = get_user_meta($user->ID, 'wp_zombaio_credits', true);
             // make sure we have a value
             if (!strlen($user_credits)) {
