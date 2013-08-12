@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Zomabio\n"
-"POT-Creation-Date: 2013-08-12 22:06-0000\n"
-"PO-Revision-Date: 2013-08-12 22:06-0000\n"
+"POT-Creation-Date: 2013-08-12 22:13-0000\n"
+"PO-Revision-Date: 2013-08-12 22:13-0000\n"
 "Last-Translator: Barry Carlyon <barry@barrycarlyon.co.uk>\n"
 "Language-Team: Barry Carlyon <barry@barrycarlyon.co.uk>\n"
 "Language: en_UK\n"
@@ -436,7 +436,7 @@ msgstr ""
 msgid "Standard Settings"
 msgstr ""
 
-#: wp_zombaio.php:670 wp_zombaio_wizard.php:63
+#: wp_zombaio.php:670 wp_zombaio_wizard.php:64
 msgid "Site ID:"
 msgstr ""
 
@@ -1169,9 +1169,11 @@ msgid "You Need to enter your Zombaio GW Pass"
 msgstr ""
 
 #: wp_zombaio_wizard.php:22
+#, php-format
 msgid ""
 "<h3>Communications - Postback</h3><p>Now the final step</p><p>Update the "
-"<strong>Postback URL (ZScript)</strong> to the following:</p>"
+"<strong>Postback URL (ZScript)</strong> (<a href=\"#nowhere\" onclick=\"%s"
+"\">Screenshot</a>) to the following:</p>"
 msgstr ""
 
 #: wp_zombaio_wizard.php:26
@@ -1181,14 +1183,19 @@ msgid ""
 "Settings, and check it can communciate with your site.</p><p>If everything "
 "is correct, it should say Successful and save the URL</p><p>If not, please "
 "<a href=\"%s\">Click Here</a> and we will restart the Wizard to confirm your "
-"settings</p><p>If everything worked, just hit Submit below</p>"
+"settings</p><p>If everything worked, set your <strong>Member URL</strong>, "
+"in ZOA as desired and then just hit Submit below</p>"
 msgstr ""
 
-#: wp_zombaio_wizard.php:39
+#: wp_zombaio_wizard.php:31 wp_zombaio_wizard.php:50
+msgid "Website Password"
+msgstr ""
+
+#: wp_zombaio_wizard.php:40
 msgid "You Need to enter your Site ID"
 msgstr ""
 
-#: wp_zombaio_wizard.php:44
+#: wp_zombaio_wizard.php:45
 #, php-format
 msgid ""
 "<h3>Communications - Gateway Password</h3><p>Next we need to setup the "
@@ -1198,15 +1205,11 @@ msgid ""
 "onclick=\"%s\">Screenshot</a>)</p>"
 msgstr ""
 
-#: wp_zombaio_wizard.php:48
+#: wp_zombaio_wizard.php:49
 msgid "Zombaio GW Pass:"
 msgstr ""
 
-#: wp_zombaio_wizard.php:49
-msgid "Website Password"
-msgstr ""
-
-#: wp_zombaio_wizard.php:56
+#: wp_zombaio_wizard.php:57
 #, php-format
 msgid ""
 "<h3>Introduction</h3><p>This Wizard will Guide you thru the Zombaio Setup</"
@@ -1218,6 +1221,6 @@ msgid ""
 "<strong>Site ID</strong>, enter that now:</p>"
 msgstr ""
 
-#: wp_zombaio_wizard.php:64
+#: wp_zombaio_wizard.php:65
 msgid "Website Management"
 msgstr ""
