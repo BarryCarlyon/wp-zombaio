@@ -1428,24 +1428,40 @@ jQuery(document).ready(function() {
             $redirect = false;
 
             if ($this->options->redirect_target) {
-                $target_url = get_permalink($this->options->redirect_target);
+                $target = $this->options->redirect_target;
+                $target_url = get_permalink($target);
             } else {
                 $target = true;
-                $target_url = site_url('wp-login.php');
+                $target_url = home_url('wp-login.php');
             }
 
+            // valid target?
             if ($target) {
-                if (is_singular() || is_single() || is_page()) {
-                    if (get_the_ID() != $target) {
-                        $redirect = true;
+                // dev hook is page excluded?
+                if (is_home() && !$this->options->redirect_home_page) {
+                    $target = false;
+                } else if (is_singular() || is_single() || is_page()) {
+                    $meta = get_post_meta(get_the_ID(), 'wp_zombaio_redirect_disable', true);
+                    if ($meta == '1') {
+                        $target = false;
                     }
-                } else {
-                    $redirect = true;
                 }
 
-                if ($redirect) {
-                    header('Location: ' . $target_url);
-                    exit;
+                if ($target) {
+                    if ($target === true) {
+                        $redirect = true;
+                    } else if (is_singular() || is_single() || is_page()) {
+                        if (get_the_ID() != $target) {
+                            $redirect = true;
+                        }
+                    } else {
+                        $redirect = true;
+                    }
+
+                    if ($redirect) {
+                        header('Location: ' . $target_url);
+                        exit;
+                    }
                 }
             }
         }
