@@ -3,8 +3,8 @@ Contributors: BarryCarlyon
 Donate link: http://barrycarlyon.co.uk/wordpress/wordpress-plugins/wp-zombaio/
 Tags: zombaio, membership, adult
 Requires at least: 3.4.2
-Tested up to: 3.4.2
-Stable tag: 1.0.4
+Tested up to: 3.6
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,8 +58,14 @@ Whats Coming Soon
 1. The Settings Page in Full
 1. WP Widgets Page
 1. Logs Interface
+1. Page Edit
 
 == Changelog ==
+
+= 1.0.5 =
+* At the request of a user added the ability to unlock pages
+* You an unlock a page/post by editing it and set "Allow access to All" to Yes
+* Tested with 3.6 all seems good
 
 = 1.0.4 =
 * Tweaks to the Validate ZScript Code
