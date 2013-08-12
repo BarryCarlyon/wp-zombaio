@@ -42,12 +42,17 @@ Its not been tested on Multi Site, so no guarentee it works or not.....
 
 See [Other Notes](http://wordpress.org/extend/plugins/wp-zombaio/other_notes/) for Usage/Instructions
 
+= Help =
+
 For Extra help/support or otherwise, either use the [WordPress Support Forum](http://wordpress.org/support/plugin/wp-zombaio), or [Drop Me a Line](http://barrycarlyon.co.uk/wordpress/contact/)
 
-### Whats Coming Soon ###
+You can also reach out to us on [Twitter](https://twitter.com/wpzombaio)!
 
-* Allow Pages, when you have the login block on, you can set a flag to allow pages/posts thru
+= Whats Coming Soon =
+
+* Credit Purchase and Spending there of
 * Flexible Protection
+* Suspend a User Manually
 
 ## Installation ##
 
@@ -64,10 +69,14 @@ For Extra help/support or otherwise, either use the [WordPress Support Forum](ht
 
 ## Changelog ##
 
-= 1.0.5 =
-* At the request of a user added the ability to unlock pages
+= 1.0.6 =
+* At the request of Sam Rockhard owner of New Market Media, added the ability to unlock pages
+* Adds a option to the Admin Settings Page to enable/disable redirect off the home page
+* Changes the pick a page to redirect to, to the better interface
+* Adds a Meta Box to the post/page editor to make that post/page public (no need to set this on the target page)
 * You an unlock a page/post by editing it and set "Allow access to All" to Yes
 * Tested with 3.6 all seems good
+
 
 ### 1.0.4 ###
 * Tweaks to the Validate ZScript Code
