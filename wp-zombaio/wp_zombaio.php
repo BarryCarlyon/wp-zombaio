@@ -718,7 +718,7 @@ jQuery(document).ready(function() {
                 echo '<div id="message" class="updated"><p>' . __('Settings Updated', 'wp-zombaio') , '</p></div>';
             }
 
-            echo '<p>' . __('For Reference, your Zombaio Postback URL (ZScript) should be set to', 'wp-zombaio') . ' <input type="text" name="postbackurl" value="' . site_url() . '" onclick="jQuery(this).select();" readonly="readonly" /></p>';
+            echo '<p>' . __('For Reference, your Zombaio Postback URL (ZScript) should be set to', 'wp-zombaio') . ' <input type="text" name="postbackurl" value="' . site_url() . '" onclick="jQuery(this).select();" style="width: 250px;" readonly="readonly" /></p>';
             echo '<table>';
 
             echo '<tr><td style="width: 200px;"></td><td><h3>' . __('Standard Settings', 'wp-zombaio') . '</h3></td></tr>';
