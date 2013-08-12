@@ -258,4 +258,4 @@ We provide a shortcode and widget to display the Seal on your website, and instr
 
 ### I need help! ###
 
-Either use the [WordPress Support Forum](http://wordpress.org/support/plugin/wp-zombaio), or [Drop Me a Line](http://barrycarlyon.co.uk/wordpress/contact/)
+Either use the [WordPress Support Forum](http://wordpress.org/support/plugin/wp-zombaio), or [Drop Me a Line](http://barrycarlyon.co.uk/wordpress/contact/) or you can find us on [Twitter](https://twitter.com/wpzombaio)
