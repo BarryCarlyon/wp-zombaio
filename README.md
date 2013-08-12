@@ -59,47 +59,7 @@ For Extra help/support or otherwise, either use the [WordPress Support Forum](ht
 
 ## Screenshots ##
 
-### 1. The ShortCodes and Widgets in Action ###
-![1. The ShortCodes and Widgets in Action](http://s.wordpress.org/extend/plugins/wp-zombaio/screenshot-1.png)
-
-### 1. Activating the Plugin ###
-![1. Activating the Plugin](http://s.wordpress.org/extend/plugins/wp-zombaio/screenshot-2.png)
-
-### 1. Wizard Step 1 ###
-![1. Wizard Step 1](http://s.wordpress.org/extend/plugins/wp-zombaio/screenshot-3.png)
-
-### 1. Wizard Step 2 ###
-![1. Wizard Step 2](http://s.wordpress.org/extend/plugins/wp-zombaio/screenshot-4.png)
-
-### 1. Wizard Step 3 ###
-![1. Wizard Step 3](http://s.wordpress.org/extend/plugins/wp-zombaio/screenshot-5.png)
-
-### 1. The Settings Page in Full ###
-![1. The Settings Page in Full](http://s.wordpress.org/extend/plugins/wp-zombaio/screenshot-6.png)
-
-### 1. WP Widgets Page ###
-![1. WP Widgets Page](http://s.wordpress.org/extend/plugins/wp-zombaio/screenshot-7.png)
-
-### 1. Logs Interface ###
-![1. Logs Interface](http://s.wordpress.org/extend/plugins/wp-zombaio/screenshot-8.png)
-
-### 1. Page Edit - making a page public ###
-![1. Page Edit - making a page public](http://s.wordpress.org/extend/plugins/wp-zombaio/screenshot-9.png)
-
-### 1. Menu Control ###
-![1. Menu Control](http://s.wordpress.org/extend/plugins/wp-zombaio/screenshot-10.png)
-
-### 1. Updating Users - Table ###
-![1. Updating Users - Table](http://s.wordpress.org/extend/plugins/wp-zombaio/screenshot-11.png)
-
-### 1. Updating Users - A User ###
-![1. Updating Users - A User](http://s.wordpress.org/extend/plugins/wp-zombaio/screenshot-12.png)
-
-### 1. Creating a Credit Purchasble Post ###
-![1. Creating a Credit Purchasble Post](http://s.wordpress.org/extend/plugins/wp-zombaio/screenshot-13.png)
-
-### 1. Graphs! ###
-![1. Graphs!](http://s.wordpress.org/extend/plugins/wp-zombaio/screenshot-14.png)
+[Available Here](http://wordpress.org/extend/plugins/wp-zombaio/screenshots/)
 
 
 ## Changelog ##
