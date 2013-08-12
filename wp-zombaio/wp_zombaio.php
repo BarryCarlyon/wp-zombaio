@@ -21,10 +21,6 @@ class wp_zombaio {
     function __construct($proc = false) {
         require_once(plugin_dir_path(__FILE__) . 'wp_zombaio_widgets.php');
 
-        if (isset($_GET['bcreset'])) {
-            delete_option('wp_zombaio');
-        }
-
         $this->setup();
         if ($proc) {
             return;
