@@ -8,7 +8,7 @@
  * Version: 1.0.4.dev
  * Author URI: http://barrycarlyon.co.uk/wordpress/
  */
- 
+
 class wp_zombaio {
 	function __construct($proc = FALSE) {
 		if (isset($_GET['bcreset'])) {
@@ -29,7 +29,7 @@ class wp_zombaio {
 		$this->frontend();
 		return;
 	}
-	
+
 	private function setup() {
 		// user.delete codes
 		$this->delete_codes = array(
@@ -152,7 +152,7 @@ class wp_zombaio {
 					'view_item' => __('View Zombaio Log', 'wp-zombaio'),
 					'search_items' => __('Search Zombaio Logs', 'wp-zombaio'),
 					'not_found' =>  __('No Zombaio Logs found', 'wp-zombaio'),
-					'not_found_in_trash' => __('No Zombaio Logs found in Trash', 'wp-zombaio'), 
+					'not_found_in_trash' => __('No Zombaio Logs found in Trash', 'wp-zombaio'),
 					'parent_item_colon' => '',
 					'menu_name' => __('Zombaio Log', 'wp-zombaio')
 				),
@@ -218,7 +218,7 @@ class wp_zombaio {
 			'show_in_admin_status_list' => TRUE,
 			'label_count' => _n_noop( 'Card Declined Report <span class="count">(%s)</span>', 'Card Declined Report <span class="count">(%s)</span>', 'wp-zombaio'),
 		));
-		
+
 		return;
 	}
 
@@ -664,7 +664,7 @@ echo '
 						echo '<th>' . __('User', 'wp-zombaio') . '</th>';
 						echo '<th>' . __('Amount', 'wp-zombaio') . '</th>';
 						echo '<th>' . __('Reason', 'wp-zombaio') . '</th>';
-						echo '<th>' . __('Liability', 'wp-zombaio') . '</th>';						
+						echo '<th>' . __('Liability', 'wp-zombaio') . '</th>';
 					case 'declined':
 						echo '<th>' . __('Amount', 'wp-zombaio') , '</th>';
 						echo '<th>' . __('Transaction ID', 'wp-zombaio') , '</th>';
@@ -1005,17 +1005,17 @@ jQuery(document).ready(function() {
 			echo '<h1>Zombaio Gateway 1.1</h1><h3>Authentication failed. Site ID MisMatch</h3>';
 			exit;
 		}
-		
+
 		$action = isset($_GET['Action']) ? $_GET['Action'] : FALSE;
 		if (!$action) {
 			header('HTTP/1.0 401 Unauthorized');
 			echo '<h1>Zombaio Gateway 1.1</h1><h3>Authentication failed. No Action</h3>';
 			exit;
 		}
-		
+
 		$logid = $this->log();
 		$logmsg = '';
-		
+
 		$action = strtolower($action);
 		switch ($action) {
 			case 'user.add': {
@@ -1025,12 +1025,12 @@ jQuery(document).ready(function() {
 					echo '<h1>Zombaio Gateway 1.1</h1><h3>Authentication failed. No Sub</h3>';
 					exit;
 				}
-				
+
 				$email = $_GET['EMAIL'];
 				$fname = $_GET['FIRSTNAME'];
 				$lname = $_GET['LASTNAME'];
 				$password = $_GET['password'];
-				
+
 				$user_id = username_exists($username);
 				if (!$user_id) {
 					$email_test = is_email($email);
@@ -1056,7 +1056,7 @@ jQuery(document).ready(function() {
 					// username exists
 					$logmsg = 'User Create: UserName Exists, Activating User';
 				}
-				
+
 				if ($user_id) {
 					update_user_meta($user_id, 'wp_zombaio_delete', FALSE);
 					update_user_meta($user_id, 'wp_zombaio_subscription_id', $subscription_id);
@@ -1094,7 +1094,7 @@ jQuery(document).ready(function() {
 					echo '<h1>Zombaio Gateway 1.1</h1><h3>Authentication failed. Rebill No SUB ID</h3>';
 					exit;
 				}
-				
+
 				//get user ID by subscription ID
 				global $wpdb;
 				$query = 'SELECT user_id FROM ' . $wpdb->usermeta . ' WHERE meta_key = \'wp_zombaio_subscription_id\' AND meta_value = \'' . $subscription_id . '\'';
@@ -1153,18 +1153,18 @@ jQuery(document).ready(function() {
 				exit;
 			}
 		}
-		
+
 		// log result
 		$this->logresult($logid, $logmsg, $user_id);
 		$this->notifyadmin($logid, $logmsg);
-		
+
 		echo 'OK';
 		exit;
 	}
-	
+
 	private function abort() {
 	}
-	
+
 	private function log() {
 		$username = isset($_GET['username']) ? ' - ' . $_GET['username'] : '';
 		$post = array(
@@ -1187,7 +1187,7 @@ jQuery(document).ready(function() {
 		}
 		return;
 	}
-	
+
 	private function notifyadmin($logid, $logmsg) {
 		// notify admin
 		$subject = 'WP Zombaio: Payment Result';
@@ -1205,7 +1205,7 @@ jQuery(document).ready(function() {
 		}
 		$ip = $_SERVER['REMOTE_ADDR'];
 
-		$ips = $this->load_ipn_ips();		
+		$ips = $this->load_ipn_ips();
 		if ($ips) {
 			if (in_array($ip, $ips)) {
 				return TRUE;
@@ -1252,13 +1252,13 @@ jQuery(document).ready(function() {
 	*/
 	public function template_redirect() {
 		if (!is_user_logged_in() && $this->options->redirect_target_enable) {
-			$redirect = FALSE;
+			$redirect = false;
 
 			if ($this->options->redirect_target) {
 				$target = $this->options->redirect_target;
 				$target_url = get_permalink($target);
 			} else {
-				$target = TRUE;
+				$target = true;
 				$target_url = home_url('wp-login.php');
 			}
 
@@ -1275,12 +1275,14 @@ jQuery(document).ready(function() {
 				}
 
 				if ($target) {
-					if (is_singular() || is_single() || is_page()) {
+					if ($target === true) {
+						$redirect = true;
+					} else if (is_singular() || is_single() || is_page()) {
 						if (get_the_ID() != $target) {
-							$redirect = TRUE;
+							$redirect = true;
 						}
 					} else {
-						$redirect = TRUE;
+						$redirect = true;
 					}
 
 					if ($redirect) {
@@ -1292,7 +1294,7 @@ jQuery(document).ready(function() {
 		}
 	}
 	public function wp_authenticate_user($user) {
-		if (get_user_meta($user->ID, 'wp_zombaio_delete', TRUE)) {
+		if (get_user_meta($user->ID, 'wp_zombaio_delete', true)) {
 			$err = new WP_Error();
 			$err->add('wp_zombaio_error', 'Zombaio Failed Rebill');
 			return $err;
@@ -1306,7 +1308,7 @@ jQuery(document).ready(function() {
 	public function wp_enqueue_scripts() {
 		wp_enqueue_style('wp_zombaio_css', plugin_dir_url(__FILE__) . basename(__FILE__) . '?do=css');
 	}
-	
+
 	/**
 	ShortCodes
 	*/
@@ -1496,7 +1498,7 @@ class wp_zombaio_seal extends wp_widget {
 
 	function flush_widget_cache() {
 		wp_cache_delete($this->widgetclassname, 'widget');
-	}	
+	}
 }
 
 class wp_zombaio_login extends wp_widget {
@@ -1557,5 +1559,5 @@ class wp_zombaio_login extends wp_widget {
 
 	function flush_widget_cache() {
 		wp_cache_delete($this->widgetclassname, 'widget');
-	}	
+	}
 }
