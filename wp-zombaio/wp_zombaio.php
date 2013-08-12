@@ -1431,7 +1431,7 @@ jQuery(document).ready(function() {
                 $target_url = get_permalink($this->options->redirect_target);
             } else {
                 $target = true;
-                $target_url = home_url('wp-login.php');
+                $target_url = site_url('wp-login.php');
             }
 
             if ($target) {
