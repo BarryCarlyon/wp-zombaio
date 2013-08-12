@@ -28,7 +28,7 @@ class wp_zombaio {
 
         if (is_admin()) {
             // admin options interface
-            $this->admin();
+            $this->_admin();
             return;
         }
         $this->form_index = 0;
@@ -291,7 +291,9 @@ class wp_zombaio {
     Admin Setup
 
     */
-    private function admin() {
+    private function _admin() {
+//        add_action('admin_init', array($this, 'restrict_admin'));
+
         add_action('admin_notices', array($this, 'admin_notices'));
         add_action('admin_menu', array($this, 'admin_menu'));
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
@@ -305,6 +307,7 @@ class wp_zombaio {
         // users table
         add_filter('manage_users_columns', array($this, 'manage_users_columns'));
         add_filter('manage_users_custom_column', array($this, 'manage_users_custom_column'), 10, 3);
+//        add_filter('bulk_actions-users', array($this, 'manage_users_bulk_actions'));
 
         // posts table
         add_filter('manage_posts_columns', array($this, 'manage_posts_columns'));
@@ -316,6 +319,18 @@ class wp_zombaio {
         add_action('add_meta_boxes', array($this, 'add_meta_boxes'));
         add_action('save_post', array($this, 'save_post'));
     }
+
+    /**
+    Borrowed from http://codex.wordpress.org/Plugin_API/Action_Reference/admin_init#Example:_Access_Control_with_redirect
+    */
+/*
+    public function restrict_admin() {
+        if ( ! current_user_can( 'manage_options' ) && $_SERVER['PHP_SELF'] != '/wp-admin/admin-ajax.php' ) {
+            wp_redirect( site_url() ); exit;
+        }
+    }
+*/
+
     public function admin_notices() {
         $page = isset($_GET['page']) ? $_GET['page'] : '';
         $do = isset($_REQUEST['do']) ? $_REQUEST['do'] : '';
@@ -393,7 +408,10 @@ class wp_zombaio {
 
         echo '</table>';
     }
-    // Users table
+
+    /**
+    Users table
+    */
     function manage_users_columns($column) {
         if (current_user_can('edit_users')) {
             $column['wp_zombaio_subscription_id'] = __('Subscription ID', 'wp-zombaio');
@@ -415,7 +433,13 @@ class wp_zombaio {
         }
         return $value;
     }
+/*
+    function manage_users_bulk_actions($actions) {
+        $actions['zombaio_multidisable'] = 'Block Users';
 
+        return $actions;
+    }
+*/
     /**
     Post table
     */
