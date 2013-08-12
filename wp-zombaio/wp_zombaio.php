@@ -5,7 +5,7 @@
  * Plugin URI: http://barrycarlyon.co.uk/wordpress/wordpress-plugins/wp-zombaio/
  * Description: Catches Information from the Adult Payment Gateway Zombaio and acts accordingly
  * Author: Barry Carlyon
- * Version: 1.0.4.dev
+ * Version: 1.0.6
  * Author URI: http://barrycarlyon.co.uk/wordpress/
  */
 

@@ -4,7 +4,7 @@ Donate link: http://barrycarlyon.co.uk/wordpress/wordpress-plugins/wp-zombaio/
 Tags: zombaio, membership, adult
 Requires at least: 3.4.2
 Tested up to: 3.6
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,16 +26,19 @@ When a user delete/cancel occurs, the admin can choose whether the User is delet
 
 This plugin works with "Anyone can register" disabled, stopping users signing up without using a Zombaio based Join Form.
 
-Built in Splash Page/redirection allows you to redirect logged out users to a WordPress Page of your Choosing, thus protecting your content from non members, as well as giving you the ability to warn users about the site content, or create a suitable "Join my Site" page.
+Built in Splash Page/redirection allows you to redirect logged out users to a WordPress Page of your Choosing, thus protecting your content from non members, as well as giving you the ability to warn users about the site content, or create a suitable "Join my Site" page. You can also choose pages that are unlocked/open to all users. For tours etc.
 
 See [Other Notes](http://wordpress.org/extend/plugins/wp-zombaio/other_notes/) for Usage/Instructions
 
+= Help =
+
 For Extra help/support or otherwise, either use the [WordPress Support Forum](http://wordpress.org/support/plugin/wp-zombaio), or [Drop Me a Line](http://barrycarlyon.co.uk/wordpress/contact/)
 
-Whats Coming Soon
+You can also reach out to us on [Twitter](https://twitter.com/wpzombaio)!
+
+= Whats Coming Soon =
 
 * Credit Purchase and Spending there of
-* Allow Pages, when you have the login block on, you can set a flag to allow pages/posts thru
 * Flexible Protection
 * Suspend a User Manually
 
@@ -58,12 +61,15 @@ Whats Coming Soon
 1. The Settings Page in Full
 1. WP Widgets Page
 1. Logs Interface
-1. Page Edit
+1. Page Edit - making a page public
 
 == Changelog ==
 
-= 1.0.5 =
-* At the request of a user added the ability to unlock pages
+= 1.0.6 =
+* At the request of Sam Rockhard owner of New Market Media, added the ability to unlock pages
+* Adds a option to the Admin Settings Page to enable/disable redirect off the home page
+* Changes the pick a page to redirect to, to the better interface
+* Adds a Meta Box to the post/page editor to make that post/page public (no need to set this on the target page)
 * You an unlock a page/post by editing it and set "Allow access to All" to Yes
 * Tested with 3.6 all seems good
 
