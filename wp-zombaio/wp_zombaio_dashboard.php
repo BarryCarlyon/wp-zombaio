@@ -155,6 +155,7 @@ class wp_zombaio_dashboard {
             AND p.post_status = \'credit_spend\'
             AND pm.meta_key = \'wp_zombaio_credits\'';
         $spent = $wpdb->get_var($query);
+        $spent = $spent ? $spent : 0;
 
         echo '<p style="text-align: center;">' . sprintf(__('Users have Spent a total of %s Credits and there are %s unspent credits in User Accounts', 'wp-zombaio'), $spent, ($current_credits - $spent)) . '</p>';
 //      echo $spent . '/' . $current_credits;
@@ -426,7 +427,8 @@ function ' . $id . '_draw_chart() {
         $chart .= '
     data.addRows([' . "\n";
         foreach ($data as $x => $y) {
-            $x = 'new Date(' . str_replace('-', ',', $x) . ')';
+            $x = explode('-', $x);
+            $x = 'new Date(' . $x[0] . ', ' . ($x[1] - 1) . ', ' . $x[2] . ')';
             if (is_array($y)) {
                 $y = implode(',', $y);
             }
