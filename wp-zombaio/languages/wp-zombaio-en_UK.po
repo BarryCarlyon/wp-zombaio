@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Zomabio\n"
-"POT-Creation-Date: 2013-08-12 21:39-0000\n"
-"PO-Revision-Date: 2013-08-12 21:39-0000\n"
+"POT-Creation-Date: 2013-08-12 22:06-0000\n"
+"PO-Revision-Date: 2013-08-12 22:06-0000\n"
 "Last-Translator: Barry Carlyon <barry@barrycarlyon.co.uk>\n"
 "Language-Team: Barry Carlyon <barry@barrycarlyon.co.uk>\n"
 "Language: en_UK\n"
@@ -436,7 +436,7 @@ msgstr ""
 msgid "Standard Settings"
 msgstr ""
 
-#: wp_zombaio.php:670 wp_zombaio_wizard.php:59
+#: wp_zombaio.php:670 wp_zombaio_wizard.php:63
 msgid "Site ID:"
 msgstr ""
 
@@ -1154,47 +1154,70 @@ msgstr ""
 
 #: wp_zombaio_wizard.php:10
 msgid ""
+"Make sure when you are ready to go, to set your <strong>Site Profile, "
+"Production mode to LIVE</strong>, otherwise you will not be able to take any "
+"money!"
+msgstr ""
+
+#: wp_zombaio_wizard.php:11
+msgid ""
 "<p>You can now review the current options and change advanced options</p>"
 msgstr ""
 
-#: wp_zombaio_wizard.php:16
+#: wp_zombaio_wizard.php:17
 msgid "You Need to enter your Zombaio GW Pass"
 msgstr ""
 
-#: wp_zombaio_wizard.php:21
+#: wp_zombaio_wizard.php:22
 msgid ""
 "<h3>Communications - Postback</h3><p>Now the final step</p><p>Update the "
 "<strong>Postback URL (ZScript)</strong> to the following:</p>"
 msgstr ""
 
-#: wp_zombaio_wizard.php:25
+#: wp_zombaio_wizard.php:26
 #, php-format
 msgid ""
-"<p>Then Press Validate</p><p>Zombaio will then Validate the Settings, and if "
-"everything is correct, should say Successful and save the URL</p><p>If not, "
-"please <a href=\"%s\">Click Here</a> and we will restart the Wizard to "
-"confirm your settings</p><p>If everything worked, just hit Submit below</p>"
+"<p>Then Press <strong>Validate</strong></p><p>Zombaio will then Validate the "
+"Settings, and check it can communciate with your site.</p><p>If everything "
+"is correct, it should say Successful and save the URL</p><p>If not, please "
+"<a href=\"%s\">Click Here</a> and we will restart the Wizard to confirm your "
+"settings</p><p>If everything worked, just hit Submit below</p>"
 msgstr ""
 
-#: wp_zombaio_wizard.php:37
+#: wp_zombaio_wizard.php:39
 msgid "You Need to enter your Site ID"
 msgstr ""
 
-#: wp_zombaio_wizard.php:42
+#: wp_zombaio_wizard.php:44
+#, php-format
 msgid ""
 "<h3>Communications - Gateway Password</h3><p>Next we need to setup the "
-"Zombaio -&gt; Communications</p><p>In Website Management, select Settings</"
-"p><p>Copy and Enter the <strong>Zombaio GW Pass</strong> below</p>"
+"Zombaio Communications back to your site</p><p>Under Tools then Website "
+"Management, select Settings on the profile for your Site</p><p>Copy and "
+"Enter the <strong>Zombaio GW Pass</strong> below (<a href=\"#nowhere\" "
+"onclick=\"%s\">Screenshot</a>)</p>"
 msgstr ""
 
-#: wp_zombaio_wizard.php:46
+#: wp_zombaio_wizard.php:48
 msgid "Zombaio GW Pass:"
 msgstr ""
 
-#: wp_zombaio_wizard.php:53
+#: wp_zombaio_wizard.php:49
+msgid "Website Password"
+msgstr ""
+
+#: wp_zombaio_wizard.php:56
+#, php-format
 msgid ""
 "<h3>Introduction</h3><p>This Wizard will Guide you thru the Zombaio Setup</"
-"p><h3>Site ID</h3><p>First your will need a Zombaio Account</p><p>And to "
-"have added your Website under Website Management</p><p>This will give you a "
+"p><h3>Site ID</h3><p>First your will need a <a href=\"%s\" target=\"zombaio"
+"\">Zombaio Account</a></p><p>Then you can login to <a href=\"%s\" target="
+"\"zombaio\">ZOA</a></p><p>Under Tools then Website Management (<a href="
+"\"#nowhere\" onclick=\"%s\">Screenshot</a>), you will need to create a "
+"profile for your Site, if you have not already</p><p>This will give you a "
 "<strong>Site ID</strong>, enter that now:</p>"
+msgstr ""
+
+#: wp_zombaio_wizard.php:64
+msgid "Website Management"
 msgstr ""

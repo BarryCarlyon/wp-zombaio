@@ -41,11 +41,12 @@ switch ($step) {
                 $this->options->site_id = $site_id;
                 $this->saveoptions();
 
-                echo __('<h3>Communications - Gateway Password</h3>'
+                echo sprintf(__('<h3>Communications - Gateway Password</h3>'
                     . '<p>Next we need to setup the Zombaio Communications back to your site</p>'
                     . '<p>Under Tools then Website Management, select Settings on the profile for your Site</p>'
-                    . '<p>Copy and Enter the <strong>Zombaio GW Pass</strong> below</p>', 'wp-zombaio');
+                    . '<p>Copy and Enter the <strong>Zombaio GW Pass</strong> below (<a href="#nowhere" onclick="%s">Screenshot</a>)</p>', 'wp-zombaio'), 'jQuery(\'#wp_zombaio_website_password\').dialog({width: 720});');
                 echo '<label for="gw_pass">' . __('Zombaio GW Pass:', 'wp-zombaio') . ' <input type="text" name="gw_pass" id="gw_pass" value="' . $this->options->gw_pass . '" /></label>';
+                echo '<div id="wp_zombaio_website_password" style="display: none;"><img src="' . plugin_dir_url(__FILE__) . '/assets/screenshots/website_password.png" style="width: 700px;" alt="' . __('Website Password', 'wp-zombaio') . '" /></div>';
                 $nextstep = 2;
                 break;
             }
