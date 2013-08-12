@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Zomabio\n"
-"POT-Creation-Date: 2013-08-12 21:19-0000\n"
-"PO-Revision-Date: 2013-08-12 21:19-0000\n"
+"POT-Creation-Date: 2013-08-12 21:39-0000\n"
+"PO-Revision-Date: 2013-08-12 21:39-0000\n"
 "Last-Translator: Barry Carlyon <barry@barrycarlyon.co.uk>\n"
 "Language-Team: Barry Carlyon <barry@barrycarlyon.co.uk>\n"
 "Language: en_UK\n"
@@ -231,7 +231,7 @@ msgstr ""
 msgid "No Zombaio Logs found in Trash"
 msgstr ""
 
-#: wp_zombaio.php:234 wp_zombaio.php:842
+#: wp_zombaio.php:234 wp_zombaio.php:791
 msgid "User Add"
 msgstr ""
 
@@ -240,7 +240,7 @@ msgstr ""
 msgid "User Add <span class=\"count\">(%s)</span>"
 msgstr ""
 
-#: wp_zombaio.php:242 wp_zombaio.php:843
+#: wp_zombaio.php:242 wp_zombaio.php:792
 msgid "User Delete"
 msgstr ""
 
@@ -249,7 +249,7 @@ msgstr ""
 msgid "User Delete <span class=\"count\">(%s)</span>"
 msgstr ""
 
-#: wp_zombaio.php:250 wp_zombaio.php:844
+#: wp_zombaio.php:250 wp_zombaio.php:793
 msgid "User Add Credits"
 msgstr ""
 
@@ -285,7 +285,7 @@ msgstr ""
 msgid "Card Declined Report <span class=\"count\">(%s)</span>"
 msgstr ""
 
-#: wp_zombaio.php:282 wp_zombaio.php:848 wp_zombaio.php:920
+#: wp_zombaio.php:282 wp_zombaio.php:797 wp_zombaio.php:869
 msgid "Credits Spent"
 msgstr ""
 
@@ -325,17 +325,17 @@ msgstr ""
 msgid "Zombaio Suspend Access:"
 msgstr ""
 
-#: wp_zombaio.php:391 wp_zombaio.php:434 wp_zombaio.php:501 wp_zombaio.php:742
+#: wp_zombaio.php:391 wp_zombaio.php:434 wp_zombaio.php:501 wp_zombaio.php:687
 #: wp_zombaio_dashboard.php:114
 msgid "No"
 msgstr ""
 
-#: wp_zombaio.php:392 wp_zombaio.php:434 wp_zombaio.php:502 wp_zombaio.php:743
+#: wp_zombaio.php:392 wp_zombaio.php:434 wp_zombaio.php:502 wp_zombaio.php:688
 #: wp_zombaio_dashboard.php:115
 msgid "Yes"
 msgstr ""
 
-#: wp_zombaio.php:403 wp_zombaio.php:886 wp_zombaio.php:904
+#: wp_zombaio.php:403 wp_zombaio.php:835 wp_zombaio.php:853
 msgid "Subscription ID"
 msgstr ""
 
@@ -424,182 +424,131 @@ msgstr ""
 msgid "Run Wizard Again"
 msgstr ""
 
-#: wp_zombaio.php:658
-msgid "All Done, you are ready to go"
-msgstr ""
-
-#: wp_zombaio.php:659
-msgid ""
-"<p>You can now review the current options and change advanced options</p>"
-msgstr ""
-
-#: wp_zombaio.php:665
-msgid "You Need to enter your Zombaio GW Pass"
-msgstr ""
-
-#: wp_zombaio.php:670
-msgid ""
-"<p>Now the final step</p><p>Update the <strong>Postback URL (ZScript)</"
-"strong> to the following:</p>"
-msgstr ""
-
-#: wp_zombaio.php:672
-#, php-format
-msgid ""
-"<p>Then Press Validate</p><p>Zombaio will then Validate the Settings, and if "
-"everything is correct, should say Successful and save the URL</p><p>If not, "
-"please <a href=\"%s\">Click Here</a> and we will restart the Wizard to "
-"confirm your settings</p><p>If everything worked, just hit Submit below</p>"
-msgstr ""
-
-#: wp_zombaio.php:684
-msgid "You Need to enter your Site ID"
-msgstr ""
-
-#: wp_zombaio.php:689
-msgid ""
-"<p>Next we need to setup the Zombaio -&gt; Communications</p><p>In Website "
-"Management, select Settings</p><p>Copy and Enter the <strong>Zombaio GW "
-"Pass</strong> below</p>"
-msgstr ""
-
-#: wp_zombaio.php:692
-msgid "Zombaio GW Pass:"
-msgstr ""
-
-#: wp_zombaio.php:699
-msgid ""
-"<p>This Wizard will Guide you thru the Zombaio Setup</p><p>First your will "
-"need a Zombaio Account</p><p>And to have added your Website under Website "
-"Management</p><p>This will give you a <strong>Site ID</strong>, enter that "
-"now:</p>"
-msgstr ""
-
-#: wp_zombaio.php:703 wp_zombaio.php:725
-msgid "Site ID:"
-msgstr ""
-
-#: wp_zombaio.php:718
+#: wp_zombaio.php:663
 msgid "Settings Updated"
 msgstr ""
 
-#: wp_zombaio.php:721
+#: wp_zombaio.php:666
 msgid "For Reference, your Zombaio Postback URL (ZScript) should be set to"
 msgstr ""
 
-#: wp_zombaio.php:724
+#: wp_zombaio.php:669
 msgid "Standard Settings"
 msgstr ""
 
-#: wp_zombaio.php:726
+#: wp_zombaio.php:670 wp_zombaio_wizard.php:59
+msgid "Site ID:"
+msgstr ""
+
+#: wp_zombaio.php:671
 msgid "Zombaio GW Pass"
 msgstr ""
 
-#: wp_zombaio.php:732
+#: wp_zombaio.php:677
 msgid "Advanced Settings"
 msgstr ""
 
-#: wp_zombaio.php:733
+#: wp_zombaio.php:678
 msgid "Delete Action"
 msgstr ""
 
-#: wp_zombaio.php:735
+#: wp_zombaio.php:680
 msgid "Delete User Account"
 msgstr ""
 
-#: wp_zombaio.php:736
+#: wp_zombaio.php:681
 msgid "Block User Access"
 msgstr ""
 
-#: wp_zombaio.php:738
+#: wp_zombaio.php:683
 msgid "What to do when Zombaio Calls User Delete"
 msgstr ""
 
-#: wp_zombaio.php:740
+#: wp_zombaio.php:685
 msgid "Bypass IPN Verfication"
 msgstr ""
 
-#: wp_zombaio.php:745
+#: wp_zombaio.php:690
 msgid ""
 "We Validate the Zombaio IP against a Known list, You can bypass this if "
 "needed"
 msgstr ""
 
-#: wp_zombaio.php:751
+#: wp_zombaio.php:696
 msgid "Notification Preferences"
 msgstr ""
 
-#: wp_zombaio.php:752 wp_zombaio.php:754
+#: wp_zombaio.php:697 wp_zombaio.php:699
 msgid "Enabled"
 msgstr ""
 
-#: wp_zombaio.php:755
+#: wp_zombaio.php:700
 msgid "Disabled"
 msgstr ""
 
-#: wp_zombaio.php:757
+#: wp_zombaio.php:702
 msgid "Email Address:"
 msgstr ""
 
-#: wp_zombaio.php:758
+#: wp_zombaio.php:703
 #, php-format
 msgid ""
 "By default we Notify the Admin Email <i>%s</i> you can change that above or "
 "leave blank to send to the default"
 msgstr ""
 
-#: wp_zombaio.php:764 wp_zombaio_guide.php:46
+#: wp_zombaio.php:709 wp_zombaio_guide.php:46
 msgid "Login Control"
 msgstr ""
 
-#: wp_zombaio.php:766
+#: wp_zombaio.php:711
 msgid ""
 "In order to Protect your Membership Site, we need to Force Users to Login, "
 "(or register)"
 msgstr ""
 
-#: wp_zombaio.php:767
+#: wp_zombaio.php:712
 msgid "Enable Login Required"
 msgstr ""
 
-#: wp_zombaio.php:769 wp_zombaio.php:791 wp_zombaio.php:807 wp_zombaio.php:813
+#: wp_zombaio.php:714 wp_zombaio.php:736 wp_zombaio.php:752 wp_zombaio.php:758
 msgid "On"
 msgstr ""
 
-#: wp_zombaio.php:770 wp_zombaio.php:792 wp_zombaio.php:808 wp_zombaio.php:814
+#: wp_zombaio.php:715 wp_zombaio.php:737 wp_zombaio.php:753 wp_zombaio.php:759
 msgid "Off"
 msgstr ""
 
-#: wp_zombaio.php:772
+#: wp_zombaio.php:717
 msgid "Redirect Target"
 msgstr ""
 
-#: wp_zombaio.php:773
+#: wp_zombaio.php:718
 msgid "Where shall we send them? (Leave blank for the default WP Login)"
 msgstr ""
 
-#: wp_zombaio.php:779
+#: wp_zombaio.php:724
 msgid "&mdash; Select &mdash;"
 msgstr ""
 
-#: wp_zombaio.php:784
+#: wp_zombaio.php:729
 #, php-format
 msgid "<p>See the <a href=\"%s\">Guide</a> on usage</p>"
 msgstr ""
 
-#: wp_zombaio.php:789
+#: wp_zombaio.php:734
 msgid "Redirect off the home page?"
 msgstr ""
 
-#: wp_zombaio.php:800
+#: wp_zombaio.php:745
 msgid "Extras"
 msgstr ""
 
-#: wp_zombaio.php:801
+#: wp_zombaio.php:746
 msgid "Seal Code:"
 msgstr ""
 
-#: wp_zombaio.php:803
+#: wp_zombaio.php:748
 #, php-format
 msgid ""
 "This field&#39;s contents are shown when using the [zombaio_seal] shortcode, "
@@ -607,155 +556,155 @@ msgid ""
 "Seal"
 msgstr ""
 
-#: wp_zombaio.php:805
+#: wp_zombaio.php:750
 msgid "Raw Logs/Editor"
 msgstr ""
 
-#: wp_zombaio.php:811
+#: wp_zombaio.php:756
 msgid "Use Plugin Logged In/Out Menus"
 msgstr ""
 
-#: wp_zombaio.php:818
+#: wp_zombaio.php:763
 #, php-format
 msgid "You can configure Menus under Appearance or <a href=\"%s\">here</a>"
 msgstr ""
 
-#: wp_zombaio.php:826
+#: wp_zombaio.php:771
 msgid "Submit"
 msgstr ""
 
-#: wp_zombaio.php:839
+#: wp_zombaio.php:788
 msgid "Transaction Logs"
 msgstr ""
 
-#: wp_zombaio.php:845
+#: wp_zombaio.php:794
 msgid "Rebill"
 msgstr ""
 
-#: wp_zombaio.php:846
+#: wp_zombaio.php:795
 msgid "Chargeback"
 msgstr ""
 
-#: wp_zombaio.php:847
+#: wp_zombaio.php:796
 msgid "Declined"
 msgstr ""
 
-#: wp_zombaio.php:873
+#: wp_zombaio.php:822
 msgid "Click a row to view the Full Log"
 msgstr ""
 
-#: wp_zombaio.php:878
+#: wp_zombaio.php:827
 msgid "Log ID"
 msgstr ""
 
-#: wp_zombaio.php:883 wp_zombaio.php:890 wp_zombaio.php:894 wp_zombaio.php:901
-#: wp_zombaio.php:909
+#: wp_zombaio.php:832 wp_zombaio.php:839 wp_zombaio.php:843 wp_zombaio.php:850
+#: wp_zombaio.php:858
 msgid "User"
 msgstr ""
 
-#: wp_zombaio.php:884 wp_zombaio.php:896 wp_zombaio.php:902 wp_zombaio.php:910
-#: wp_zombaio.php:914
+#: wp_zombaio.php:833 wp_zombaio.php:845 wp_zombaio.php:851 wp_zombaio.php:859
+#: wp_zombaio.php:863
 msgid "Amount"
 msgstr ""
 
-#: wp_zombaio.php:885 wp_zombaio.php:897 wp_zombaio.php:903 wp_zombaio.php:915
+#: wp_zombaio.php:834 wp_zombaio.php:846 wp_zombaio.php:852 wp_zombaio.php:864
 msgid "Transaction ID"
 msgstr ""
 
-#: wp_zombaio.php:887 wp_zombaio.php:898
+#: wp_zombaio.php:836 wp_zombaio.php:847
 msgid "Pricing ID"
 msgstr ""
 
-#: wp_zombaio.php:891
+#: wp_zombaio.php:840
 msgid "Delete Reason"
 msgstr ""
 
-#: wp_zombaio.php:895 wp_zombaio_guide.php:63
+#: wp_zombaio.php:844 wp_zombaio_guide.php:63
 msgid "Credits"
 msgstr ""
 
-#: wp_zombaio.php:905
+#: wp_zombaio.php:854
 msgid "Status"
 msgstr ""
 
-#: wp_zombaio.php:906
+#: wp_zombaio.php:855
 msgid "Retry"
 msgstr ""
 
-#: wp_zombaio.php:911 wp_zombaio.php:916
+#: wp_zombaio.php:860 wp_zombaio.php:865
 msgid "Reason"
 msgstr ""
 
-#: wp_zombaio.php:912
+#: wp_zombaio.php:861
 msgid "Liability"
 msgstr ""
 
-#: wp_zombaio.php:919
+#: wp_zombaio.php:868
 msgid "Post"
 msgstr ""
 
-#: wp_zombaio.php:924
+#: wp_zombaio.php:873
 msgid "Log Time"
 msgstr ""
 
-#: wp_zombaio.php:943 wp_zombaio.php:948 wp_zombaio.php:967 wp_zombaio.php:972
-#: wp_zombaio.php:981 wp_zombaio.php:986 wp_zombaio.php:1005
-#: wp_zombaio.php:1010 wp_zombaio.php:1030 wp_zombaio.php:1035
+#: wp_zombaio.php:892 wp_zombaio.php:897 wp_zombaio.php:916 wp_zombaio.php:921
+#: wp_zombaio.php:930 wp_zombaio.php:935 wp_zombaio.php:954 wp_zombaio.php:959
+#: wp_zombaio.php:979 wp_zombaio.php:984
 msgid "Unreg: "
 msgstr ""
 
-#: wp_zombaio.php:956 wp_zombaio.php:995 wp_zombaio.php:1018
-#: wp_zombaio.php:1043 wp_zombaio.php:1054
+#: wp_zombaio.php:905 wp_zombaio.php:944 wp_zombaio.php:967 wp_zombaio.php:992
+#: wp_zombaio.php:1003
 msgid "Failed"
 msgstr ""
 
-#: wp_zombaio.php:1078
+#: wp_zombaio.php:1027
 msgid "Back"
 msgstr ""
 
-#: wp_zombaio.php:1082
+#: wp_zombaio.php:1031
 msgid "Forward"
 msgstr ""
 
-#: wp_zombaio.php:1510
+#: wp_zombaio.php:1459
 msgid "Access Blocked: Zombaio Failed Rebill or Access Suspended"
 msgstr ""
 
-#: wp_zombaio.php:1533
+#: wp_zombaio.php:1482
 msgid "Zombaio Logged Out Navigation"
 msgstr ""
 
-#: wp_zombaio.php:1534
+#: wp_zombaio.php:1483
 msgid "Zombaio Logged In Navigation"
 msgstr ""
 
-#: wp_zombaio.php:1572
+#: wp_zombaio.php:1521
 msgid "Join"
 msgstr ""
 
-#: wp_zombaio.php:1628
+#: wp_zombaio.php:1577
 msgid "Click to buy credits"
 msgstr ""
 
-#: wp_zombaio.php:1724
+#: wp_zombaio.php:1673
 msgid "You don&#39;t have enough Credits"
 msgstr ""
 
-#: wp_zombaio.php:1751
+#: wp_zombaio.php:1700
 #, php-format
 msgid "Your access expires in %s"
 msgstr ""
 
-#: wp_zombaio.php:1760
+#: wp_zombaio.php:1709
 msgid "This Post is Purchasble"
 msgstr ""
 
-#: wp_zombaio.php:1762
+#: wp_zombaio.php:1711
 #, php-format
 msgid "You have %s Credits"
 msgstr ""
 
-#: wp_zombaio.php:1763
+#: wp_zombaio.php:1712
 #, php-format
 msgid "Buy Now %s Credits"
 msgstr ""
@@ -1018,22 +967,22 @@ msgstr ""
 msgid ""
 "\n"
 "<p>You can get your Seal Code as follows:\n"
-"\t<ul class=\"disc\">\n"
-"\t\t<li>Login to <a href=\"%s\">ZOA</a></li>\n"
-"\t\t<li>Navigate to:\n"
-"\t\t\t<ul class=\"disc\">\n"
-"\t\t\t\t<li>Tools</li>\n"
-"\t\t\t\t<li>Pricing Structure</li>\n"
-"\t\t\t</ul>\n"
-"\t\t</li>\n"
-"\t\t<li>Then Manage/Edit any Pricing Structure for your site</li>\n"
-"\t\t<li>Then in the HTML Button Field, copy everything from and including "
-"&lt;!-- START ZOMBAIO SEAL CODE --&gt; to &lt;!-- END ZOMBAIO SEAL CODE --"
-"&gt;</li>\n"
-"\t\t<li>Paste that into this field</li>\n"
-"\t\t<li><a href=\"#nowhere\" onclick=\"%s\">View a ScreenShot/Example</a>, "
-"the Seal Code is Hightlighted</li>\n"
-"\t</ul>\n"
+"    <ul class=\"disc\">\n"
+"        <li>Login to <a href=\"%s\">ZOA</a></li>\n"
+"        <li>Navigate to:\n"
+"            <ul class=\"disc\">\n"
+"                <li>Tools</li>\n"
+"                <li>Pricing Structure</li>\n"
+"            </ul>\n"
+"        </li>\n"
+"        <li>Then Manage/Edit any Pricing Structure for your site</li>\n"
+"        <li>Then in the HTML Button Field, copy everything from and "
+"including &lt;!-- START ZOMBAIO SEAL CODE --&gt; to &lt;!-- END ZOMBAIO SEAL "
+"CODE --&gt;</li>\n"
+"        <li>Paste that into this field</li>\n"
+"        <li><a href=\"#nowhere\" onclick=\"%s\">View a ScreenShot/Example</"
+"a>, the Seal Code is Hightlighted</li>\n"
+"    </ul>\n"
 "</p>"
 msgstr ""
 
@@ -1197,4 +1146,55 @@ msgstr ""
 
 #: wp_zombaio_widgets.php:297
 msgid "Click to buy Credits"
+msgstr ""
+
+#: wp_zombaio_wizard.php:9
+msgid "All Done, you are ready to go"
+msgstr ""
+
+#: wp_zombaio_wizard.php:10
+msgid ""
+"<p>You can now review the current options and change advanced options</p>"
+msgstr ""
+
+#: wp_zombaio_wizard.php:16
+msgid "You Need to enter your Zombaio GW Pass"
+msgstr ""
+
+#: wp_zombaio_wizard.php:21
+msgid ""
+"<h3>Communications - Postback</h3><p>Now the final step</p><p>Update the "
+"<strong>Postback URL (ZScript)</strong> to the following:</p>"
+msgstr ""
+
+#: wp_zombaio_wizard.php:25
+#, php-format
+msgid ""
+"<p>Then Press Validate</p><p>Zombaio will then Validate the Settings, and if "
+"everything is correct, should say Successful and save the URL</p><p>If not, "
+"please <a href=\"%s\">Click Here</a> and we will restart the Wizard to "
+"confirm your settings</p><p>If everything worked, just hit Submit below</p>"
+msgstr ""
+
+#: wp_zombaio_wizard.php:37
+msgid "You Need to enter your Site ID"
+msgstr ""
+
+#: wp_zombaio_wizard.php:42
+msgid ""
+"<h3>Communications - Gateway Password</h3><p>Next we need to setup the "
+"Zombaio -&gt; Communications</p><p>In Website Management, select Settings</"
+"p><p>Copy and Enter the <strong>Zombaio GW Pass</strong> below</p>"
+msgstr ""
+
+#: wp_zombaio_wizard.php:46
+msgid "Zombaio GW Pass:"
+msgstr ""
+
+#: wp_zombaio_wizard.php:53
+msgid ""
+"<h3>Introduction</h3><p>This Wizard will Guide you thru the Zombaio Setup</"
+"p><h3>Site ID</h3><p>First your will need a Zombaio Account</p><p>And to "
+"have added your Website under Website Management</p><p>This will give you a "
+"<strong>Site ID</strong>, enter that now:</p>"
 msgstr ""
