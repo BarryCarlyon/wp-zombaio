@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Zomabio\n"
-"POT-Creation-Date: 2012-10-13 00:47-0000\n"
-"PO-Revision-Date: 2012-10-13 00:47-0000\n"
+"POT-Creation-Date: 2013-08-12 20:15-0000\n"
+"PO-Revision-Date: 2013-08-12 20:15-0000\n"
 "Last-Translator: Barry Carlyon <barry@barrycarlyon.co.uk>\n"
 "Language-Team: Barry Carlyon <barry@barrycarlyon.co.uk>\n"
 "Language: en_UK\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-KeywordsList: __;_e;_n_noop\n"
 "X-Poedit-Basepath: ../.\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -187,155 +187,171 @@ msgstr ""
 msgid "General Error"
 msgstr ""
 
-#: wp_zombaio.php:142 wp_zombaio.php:144 wp_zombaio.php:145 wp_zombaio.php:156
+#: wp_zombaio.php:143 wp_zombaio.php:145 wp_zombaio.php:146 wp_zombaio.php:157
 msgid "Zombaio Log"
 msgstr ""
 
-#: wp_zombaio.php:146
+#: wp_zombaio.php:147
 msgid "Add New"
 msgstr ""
 
-#: wp_zombaio.php:147
+#: wp_zombaio.php:148
 msgid "Add New Zombaio Log"
 msgstr ""
 
-#: wp_zombaio.php:148
+#: wp_zombaio.php:149
 msgid "Edit Zombaio Log"
 msgstr ""
 
-#: wp_zombaio.php:149
+#: wp_zombaio.php:150
 msgid "New Zombaio Log"
 msgstr ""
 
-#: wp_zombaio.php:150
+#: wp_zombaio.php:151
 msgid "All Zombaio Logs"
 msgstr ""
 
-#: wp_zombaio.php:151
+#: wp_zombaio.php:152
 msgid "View Zombaio Log"
 msgstr ""
 
-#: wp_zombaio.php:152
+#: wp_zombaio.php:153
 msgid "Search Zombaio Logs"
 msgstr ""
 
-#: wp_zombaio.php:153
+#: wp_zombaio.php:154
 msgid "No Zombaio Logs found"
 msgstr ""
 
-#: wp_zombaio.php:154
+#: wp_zombaio.php:155
 msgid "No Zombaio Logs found in Trash"
 msgstr ""
 
-#: wp_zombaio.php:173 wp_zombaio.php:559
+#: wp_zombaio.php:174 wp_zombaio.php:599
 msgid "User Add"
 msgstr ""
 
-#: wp_zombaio.php:178
+#: wp_zombaio.php:179
 #, php-format
 msgid "User Add <span class=\"count\">(%s)</span>"
 msgstr ""
 
-#: wp_zombaio.php:181 wp_zombaio.php:560
+#: wp_zombaio.php:182 wp_zombaio.php:600
 msgid "User Delete"
 msgstr ""
 
-#: wp_zombaio.php:186
+#: wp_zombaio.php:187
 #, php-format
 msgid "User Delete <span class=\"count\">(%s)</span>"
 msgstr ""
 
-#: wp_zombaio.php:189 wp_zombaio.php:561
+#: wp_zombaio.php:190 wp_zombaio.php:601
 msgid "User Add Credits"
 msgstr ""
 
-#: wp_zombaio.php:194
+#: wp_zombaio.php:195
 #, php-format
 msgid "User Add Credits <span class=\"count\">(%s)</span>"
 msgstr ""
 
-#: wp_zombaio.php:197
+#: wp_zombaio.php:198
 msgid "User Rebill"
 msgstr ""
 
-#: wp_zombaio.php:202
+#: wp_zombaio.php:203
 #, php-format
 msgid "User Rebill <span class=\"count\">(%s)</span>"
 msgstr ""
 
-#: wp_zombaio.php:205
+#: wp_zombaio.php:206
 msgid "Chargeback Report"
 msgstr ""
 
-#: wp_zombaio.php:210
+#: wp_zombaio.php:211
 #, php-format
 msgid "Charge Back Report <span class=\"count\">(%s)</span>"
 msgstr ""
 
-#: wp_zombaio.php:213
+#: wp_zombaio.php:214
 msgid "Card Declined Report"
 msgstr ""
 
-#: wp_zombaio.php:218
+#: wp_zombaio.php:219
 #, php-format
 msgid "Card Declined Report <span class=\"count\">(%s)</span>"
 msgstr ""
 
-#: wp_zombaio.php:242
+#: wp_zombaio.php:246
 #, php-format
 msgid "Run the <a href=\"%s\">WP Zombaio Install Wizard?</a>"
 msgstr ""
 
-#: wp_zombaio.php:243
+#: wp_zombaio.php:247
 msgid "Dismiss Wizard"
 msgstr ""
 
-#: wp_zombaio.php:249
+#: wp_zombaio.php:253
 msgid ""
 "<p>You have <i>Anyone can register</i> enabled, this means people can join "
 "your site without Paying!</p>"
 msgstr ""
 
-#: wp_zombaio.php:261 wp_zombaio.php:265
+#: wp_zombaio.php:265
+msgid "WP Zomabio Allow Logged Out/Disable User Access"
+msgstr ""
+
+#: wp_zombaio.php:301
+msgid "Allow Access to All"
+msgstr ""
+
+#: wp_zombaio.php:304 wp_zombaio.php:526
+msgid "No"
+msgstr ""
+
+#: wp_zombaio.php:305 wp_zombaio.php:527
+msgid "Yes"
+msgstr ""
+
+#: wp_zombaio.php:318 wp_zombaio.php:322
 msgid "Guide"
 msgstr ""
 
-#: wp_zombaio.php:262
+#: wp_zombaio.php:319
 msgid "Logs"
 msgstr ""
 
-#: wp_zombaio.php:266
+#: wp_zombaio.php:323
 msgid "Settings"
 msgstr ""
 
-#: wp_zombaio.php:367
+#: wp_zombaio.php:392
 msgid "Zomabio Logo"
 msgstr ""
 
-#: wp_zombaio.php:404
+#: wp_zombaio.php:429
 msgid "Run Wizard Again"
 msgstr ""
 
-#: wp_zombaio.php:417
+#: wp_zombaio.php:442
 msgid "All Done, you are ready to go"
 msgstr ""
 
-#: wp_zombaio.php:418
+#: wp_zombaio.php:443
 msgid ""
 "<p>You can now review the current options and change advanced options</p>"
 msgstr ""
 
-#: wp_zombaio.php:424
+#: wp_zombaio.php:449
 msgid "You Need to enter your Zombaio GW Pass"
 msgstr ""
 
-#: wp_zombaio.php:429
+#: wp_zombaio.php:454
 msgid ""
 "<p>Now the final step</p><p>Update the <strong>Postback URL (ZScript)</"
 "strong> to the following:</p>"
 msgstr ""
 
-#: wp_zombaio.php:431
+#: wp_zombaio.php:456
 #, php-format
 msgid ""
 "<p>Then Press Validate</p><p>Zombaio will then Validate the Settings, and if "
@@ -344,22 +360,22 @@ msgid ""
 "confirm your settings</p><p>If everything worked, just hit Submit below</p>"
 msgstr ""
 
-#: wp_zombaio.php:443
+#: wp_zombaio.php:468
 msgid "You Need to enter your Site ID"
 msgstr ""
 
-#: wp_zombaio.php:448
+#: wp_zombaio.php:473
 msgid ""
 "<p>Next we need to setup the Zombaio -&gt; Communications</p><p>In Website "
 "Management, select Settings</p><p>Copy and Enter the <strong>Zombaio GW "
 "Pass</strong> below</p>"
 msgstr ""
 
-#: wp_zombaio.php:451
+#: wp_zombaio.php:476
 msgid "Zombaio GW Pass:"
 msgstr ""
 
-#: wp_zombaio.php:458
+#: wp_zombaio.php:483
 msgid ""
 "<p>This Wizard will Guide you thru the Zombaio Setup</p><p>First your will "
 "need a Zombaio Account</p><p>And to have added your Website under Website "
@@ -367,114 +383,108 @@ msgid ""
 "now:</p>"
 msgstr ""
 
-#: wp_zombaio.php:462 wp_zombaio.php:484
+#: wp_zombaio.php:487 wp_zombaio.php:509
 msgid "Site ID:"
 msgstr ""
 
-#: wp_zombaio.php:477
+#: wp_zombaio.php:502
 msgid "Settings Updated"
 msgstr ""
 
-#: wp_zombaio.php:480
+#: wp_zombaio.php:505
 msgid "For Reference, your Zombaio Postback URL (ZScript) should be set to"
 msgstr ""
 
-#: wp_zombaio.php:483
+#: wp_zombaio.php:508
 msgid "Standard Settings"
 msgstr ""
 
-#: wp_zombaio.php:485
+#: wp_zombaio.php:510
 msgid "Zombaio GW Pass"
 msgstr ""
 
-#: wp_zombaio.php:491
+#: wp_zombaio.php:516
 msgid "Advanced Settings"
 msgstr ""
 
-#: wp_zombaio.php:492
+#: wp_zombaio.php:517
 msgid "Delete Action"
 msgstr ""
 
-#: wp_zombaio.php:494
+#: wp_zombaio.php:519
 msgid "Delete User Account"
 msgstr ""
 
-#: wp_zombaio.php:495
+#: wp_zombaio.php:520
 msgid "Block User Access"
 msgstr ""
 
-#: wp_zombaio.php:497
+#: wp_zombaio.php:522
 msgid "What to do when Zombaio Calls User Delete"
 msgstr ""
 
-#: wp_zombaio.php:499
+#: wp_zombaio.php:524
 msgid "Bypass IPN Verfication"
 msgstr ""
 
-#: wp_zombaio.php:501
-msgid "No"
-msgstr ""
-
-#: wp_zombaio.php:502
-msgid "Yes"
-msgstr ""
-
-#: wp_zombaio.php:504
+#: wp_zombaio.php:529
 msgid ""
 "We Validate the Zombaio IP against a Known list, You can bypass this if "
 "needed"
 msgstr ""
 
-#: wp_zombaio.php:510 wp_zombaio.php:827
+#: wp_zombaio.php:535 wp_zombaio.php:867
 msgid "Login Control"
 msgstr ""
 
-#: wp_zombaio.php:512
+#: wp_zombaio.php:537
 msgid ""
 "In order to Protect your Membership Site, we need to Force Users to Login, "
 "(or register)"
 msgstr ""
 
-#: wp_zombaio.php:513
+#: wp_zombaio.php:538
 msgid "Enable Login Required"
 msgstr ""
 
-#: wp_zombaio.php:515 wp_zombaio.php:537
+#: wp_zombaio.php:540 wp_zombaio.php:561 wp_zombaio.php:577
 msgid "On"
 msgstr ""
 
-#: wp_zombaio.php:516 wp_zombaio.php:538
+#: wp_zombaio.php:541 wp_zombaio.php:562 wp_zombaio.php:578
 msgid "Off"
 msgstr ""
 
-#: wp_zombaio.php:518
+#: wp_zombaio.php:543
 msgid "Redirect Target - Page Title"
 msgstr ""
 
-#: wp_zombaio.php:519
+#: wp_zombaio.php:544
 msgid "Where shall we send them? (Leave blank for the default WP Login)"
 msgstr ""
 
-#: wp_zombaio.php:521
-msgid ""
-"Start Typing the Page Title and we will find it, we will add the Post ID to "
-"the start so ignore the number"
+#: wp_zombaio.php:549
+msgid "&mdash; Select &mdash;"
 msgstr ""
 
-#: wp_zombaio.php:522
+#: wp_zombaio.php:554
 #, php-format
 msgid "<p>See the <a href=\"%s\">Guide</a> on usage</p>"
 msgstr ""
 
-#: wp_zombaio.php:530
+#: wp_zombaio.php:559
+msgid "Redirect off the home page?"
+msgstr ""
+
+#: wp_zombaio.php:570
 msgid "Extras"
 msgstr ""
 
-#: wp_zombaio.php:531
+#: wp_zombaio.php:571
 msgid "Seal Code:"
 msgstr ""
 
-#: wp_zombaio.php:533
+#: wp_zombaio.php:573
 #, php-format
 msgid ""
 "This field&#39;s contents are shown when using the [zombaio_seal] shortcode, "
@@ -482,99 +492,99 @@ msgid ""
 "Seal"
 msgstr ""
 
-#: wp_zombaio.php:535
+#: wp_zombaio.php:575
 msgid "Raw Logs/Editor"
 msgstr ""
 
-#: wp_zombaio.php:544
+#: wp_zombaio.php:584
 msgid "Submit"
 msgstr ""
 
-#: wp_zombaio.php:555
+#: wp_zombaio.php:595
 msgid "Transaction Logs"
 msgstr ""
 
-#: wp_zombaio.php:562
+#: wp_zombaio.php:602
 msgid "Rebill"
 msgstr ""
 
-#: wp_zombaio.php:563
+#: wp_zombaio.php:603
 msgid "Chargeback"
 msgstr ""
 
-#: wp_zombaio.php:564
+#: wp_zombaio.php:604
 msgid "Declined"
 msgstr ""
 
-#: wp_zombaio.php:589
+#: wp_zombaio.php:629
 msgid "Click a row to view the Full Log"
 msgstr ""
 
-#: wp_zombaio.php:594
+#: wp_zombaio.php:634
 msgid "Log ID"
 msgstr ""
 
-#: wp_zombaio.php:599 wp_zombaio.php:606 wp_zombaio.php:610 wp_zombaio.php:616
-#: wp_zombaio.php:624
+#: wp_zombaio.php:639 wp_zombaio.php:646 wp_zombaio.php:650 wp_zombaio.php:656
+#: wp_zombaio.php:664
 msgid "User"
 msgstr ""
 
-#: wp_zombaio.php:600 wp_zombaio.php:611 wp_zombaio.php:617 wp_zombaio.php:625
-#: wp_zombaio.php:629
+#: wp_zombaio.php:640 wp_zombaio.php:651 wp_zombaio.php:657 wp_zombaio.php:665
+#: wp_zombaio.php:669
 msgid "Amount"
 msgstr ""
 
-#: wp_zombaio.php:601 wp_zombaio.php:612 wp_zombaio.php:618 wp_zombaio.php:630
+#: wp_zombaio.php:641 wp_zombaio.php:652 wp_zombaio.php:658 wp_zombaio.php:670
 msgid "Transaction ID"
 msgstr ""
 
-#: wp_zombaio.php:602 wp_zombaio.php:619
+#: wp_zombaio.php:642 wp_zombaio.php:659
 msgid "Subscription ID"
 msgstr ""
 
-#: wp_zombaio.php:603 wp_zombaio.php:613
+#: wp_zombaio.php:643 wp_zombaio.php:653
 msgid "Pricing ID"
 msgstr ""
 
-#: wp_zombaio.php:607
+#: wp_zombaio.php:647
 msgid "Delete Reason"
 msgstr ""
 
-#: wp_zombaio.php:620
+#: wp_zombaio.php:660
 msgid "Status"
 msgstr ""
 
-#: wp_zombaio.php:621
+#: wp_zombaio.php:661
 msgid "Retry"
 msgstr ""
 
-#: wp_zombaio.php:626 wp_zombaio.php:631
+#: wp_zombaio.php:666 wp_zombaio.php:671
 msgid "Reason"
 msgstr ""
 
-#: wp_zombaio.php:627
+#: wp_zombaio.php:667
 msgid "Liability"
 msgstr ""
 
-#: wp_zombaio.php:635
+#: wp_zombaio.php:675
 msgid "Log Time"
 msgstr ""
 
-#: wp_zombaio.php:654 wp_zombaio.php:659 wp_zombaio.php:676 wp_zombaio.php:681
-#: wp_zombaio.php:691 wp_zombaio.php:696 wp_zombaio.php:712 wp_zombaio.php:717
-#: wp_zombaio.php:735 wp_zombaio.php:740
+#: wp_zombaio.php:694 wp_zombaio.php:699 wp_zombaio.php:716 wp_zombaio.php:721
+#: wp_zombaio.php:731 wp_zombaio.php:736 wp_zombaio.php:752 wp_zombaio.php:757
+#: wp_zombaio.php:775 wp_zombaio.php:780
 msgid "Unreg: "
 msgstr ""
 
-#: wp_zombaio.php:773
+#: wp_zombaio.php:813
 msgid "Back"
 msgstr ""
 
-#: wp_zombaio.php:777
+#: wp_zombaio.php:817
 msgid "Forward"
 msgstr ""
 
-#: wp_zombaio.php:807
+#: wp_zombaio.php:847
 msgid ""
 "\n"
 "<h3>Zombaio Join Form</h3>\n"
@@ -605,7 +615,7 @@ msgid ""
 "are joining your Website!</p>\n"
 msgstr ""
 
-#: wp_zombaio.php:829
+#: wp_zombaio.php:869
 msgid ""
 "\n"
 "<p>With Login Control enabled, only Logged In Users (and thus people who "
@@ -621,7 +631,7 @@ msgid ""
 "<p>You can do something like:</p>"
 msgstr ""
 
-#: wp_zombaio.php:838
+#: wp_zombaio.php:878
 msgid ""
 "\n"
 "<p>Swap JOINURL for your Zombaio Pricing Structure, Join Form URL, and "
@@ -630,16 +640,16 @@ msgid ""
 "<p>That makes a nice Registration Landing Page</p>\n"
 msgstr ""
 
-#: wp_zombaio.php:842
+#: wp_zombaio.php:882
 #, php-format
 msgid "You can see an <a href=\"%s\" target=\"_blank\">example here</a>"
 msgstr ""
 
-#: wp_zombaio.php:844
+#: wp_zombaio.php:884
 msgid "Site Seal"
 msgstr ""
 
-#: wp_zombaio.php:846
+#: wp_zombaio.php:886
 #, php-format
 msgid ""
 "\n"
@@ -663,26 +673,26 @@ msgid ""
 "</p>"
 msgstr ""
 
-#: wp_zombaio.php:865
+#: wp_zombaio.php:905
 msgid "Seal Screenshot"
 msgstr ""
 
-#: wp_zombaio.php:869
+#: wp_zombaio.php:909
 msgid "Running a Membership Site"
 msgstr ""
 
-#: wp_zombaio.php:871
+#: wp_zombaio.php:911
 #, php-format
 msgid ""
 "<p>For more thoughts and advice on Running a membership site, check out the "
 "<a href=\"%s\" target=\"_blank\">Your Members Blog</a></p>"
 msgstr ""
 
-#: wp_zombaio.php:873
+#: wp_zombaio.php:913
 msgid "Caching, (Plugins or Otherwise) and CloudFlare"
 msgstr ""
 
-#: wp_zombaio.php:875
+#: wp_zombaio.php:915
 #, php-format
 msgid ""
 "<p>If you are running anything Caching related, (which you probably "
@@ -691,7 +701,7 @@ msgid ""
 "bypass the potential block</p>"
 msgstr ""
 
-#: wp_zombaio.php:876
+#: wp_zombaio.php:916
 #, php-format
 msgid ""
 "<h4>Known Caching Plugins and How to Bypass</h4>\n"
@@ -711,54 +721,54 @@ msgid ""
 "<p>You can load/fetch the Current Zombaio Known IP Addresses</p>\n"
 msgstr ""
 
-#: wp_zombaio.php:889
+#: wp_zombaio.php:929
 msgid "Load IP&#39;s"
 msgstr ""
 
-#: wp_zombaio.php:889
+#: wp_zombaio.php:929
 msgid "or"
 msgstr ""
 
-#: wp_zombaio.php:889
+#: wp_zombaio.php:929
 msgid "Load CSV List of IP&#39;s"
 msgstr ""
 
-#: wp_zombaio.php:1332
+#: wp_zombaio.php:1387
 msgid "Use this widget to add a Join Form to your SideBar"
 msgstr ""
 
-#: wp_zombaio.php:1333 wp_zombaio.php:1340
+#: wp_zombaio.php:1388 wp_zombaio.php:1395
 msgid "WP Zombaio Join Widget"
 msgstr ""
 
-#: wp_zombaio.php:1389 wp_zombaio.php:1501
+#: wp_zombaio.php:1444 wp_zombaio.php:1556
 msgid "Title:"
 msgstr ""
 
-#: wp_zombaio.php:1391
+#: wp_zombaio.php:1446
 msgid "Join Form URL:"
 msgstr ""
 
-#: wp_zombaio.php:1393
+#: wp_zombaio.php:1448
 msgid "Intro Text:"
 msgstr ""
 
-#: wp_zombaio.php:1395
+#: wp_zombaio.php:1450
 msgid "Submit Button:"
 msgstr ""
 
-#: wp_zombaio.php:1408
+#: wp_zombaio.php:1463
 msgid "Use this widget to add a Zombaio Site Seal to your SideBar"
 msgstr ""
 
-#: wp_zombaio.php:1409 wp_zombaio.php:1416
+#: wp_zombaio.php:1464 wp_zombaio.php:1471
 msgid "WP Zombaio Seal Widget"
 msgstr ""
 
-#: wp_zombaio.php:1453
+#: wp_zombaio.php:1508
 msgid "Use this widget to add a Login Form to your SideBar"
 msgstr ""
 
-#: wp_zombaio.php:1454 wp_zombaio.php:1461
+#: wp_zombaio.php:1509 wp_zombaio.php:1516
 msgid "WP Zombaio Login Widget"
 msgstr ""
