@@ -28,7 +28,7 @@ switch ($step) {
                 . '<p>If everything is correct, it should say Successful and save the URL</p>'
                 . '<p>If not, please <a href="%s">Click Here</a> and we will restart the Wizard to confirm your settings</p>'
                 . '<p>If everything worked, set your <strong>Member URL</strong>, in ZOA as desired and then just hit Submit below</p>', 'wp-zombaio'), admin_url('admin.php?page=wp_zombaio&do=wizard'));
-            echo '<div id="wp_zombaio_website_password" style="display: none;"><img src="' . plugin_dir_url(__FILE__) . '/assets/screenshots/website_password.png" style="width: 685px; border: 1px solid #000000;" alt="' . __('Website Password', 'wp-zombaio') . '" /></div>';
+            echo '<div id="wp_zombaio_website_password" style="display: none;"><img src="' . plugin_dir_url(__FILE__) . 'assets/screenshots/website_password.png" style="width: 685px; border: 1px solid #000000;" alt="' . __('Website Password', 'wp-zombaio') . '" /></div>';
 
             $nextstep = 3;
             break;
@@ -47,7 +47,7 @@ switch ($step) {
                     . '<p>Under Tools then Website Management, select Settings on the profile for your Site</p>'
                     . '<p>Copy and Enter the <strong>Zombaio GW Pass</strong> below (<a href="#nowhere" onclick="%s">Screenshot</a>)</p>', 'wp-zombaio'), 'jQuery(\'#wp_zombaio_website_password\').dialog({width: 720});');
                 echo '<label for="gw_pass">' . __('Zombaio GW Pass:', 'wp-zombaio') . ' <input type="text" name="gw_pass" id="gw_pass" value="' . $this->options->gw_pass . '" /></label>';
-                echo '<div id="wp_zombaio_website_password" style="display: none;"><img src="' . plugin_dir_url(__FILE__) . '/assets/screenshots/website_password.png" style="width: 685px; border: 1px solid #000000;" alt="' . __('Website Password', 'wp-zombaio') . '" /></div>';
+                echo '<div id="wp_zombaio_website_password" style="display: none;"><img src="' . plugin_dir_url(__FILE__) . 'assets/screenshots/website_password.png" style="width: 685px; border: 1px solid #000000;" alt="' . __('Website Password', 'wp-zombaio') . '" /></div>';
                 $nextstep = 2;
                 break;
             }
@@ -62,7 +62,7 @@ switch ($step) {
             . '<p>Under Tools then Website Management (<a href="#nowhere" onclick="%s">Screenshot</a>), you will need to create a profile for your Site, if you have not already</p>'
             . '<p>This will give you a <strong>Site ID</strong>, enter that now:</p>', 'wp-zombaio'), 'https://www.zombaio.com/', 'https://secure.zombaio.com/zoa/', 'jQuery(\'#wp_zombaio_website_management\').dialog({width: 720});');
         echo '<label for="site_id">' . __('Site ID:', 'wp-zombaio') . ' <input type="text" name="site_id" id="site_id" value="' . $this->options->site_id . '" /></label>';
-        echo '<div id="wp_zombaio_website_management" style="display: none;"><img src="' . plugin_dir_url(__FILE__) . '/assets/screenshots/website_management.jpg" style="width: 685px; border: 1px solid #000000;" alt="' . __('Website Management', 'wp-zombaio') . '" /></div>';
+        echo '<div id="wp_zombaio_website_management" style="display: none;"><img src="' . plugin_dir_url(__FILE__) . 'assets/screenshots/website_management.jpg" style="width: 685px; border: 1px solid #000000;" alt="' . __('Website Management', 'wp-zombaio') . '" /></div>';
         $nextstep = 1;
 }
 echo '<input type="hidden" name="step" value="' . $nextstep . '" />';
