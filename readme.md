@@ -1,12 +1,12 @@
 # WP Zombaio #
-**Contributors:** BarryCarlyon  
-**Donate link:** http://barrycarlyon.co.uk/wordpress/wordpress-plugins/wp-zombaio/  
-**Tags:** zombaio, membership, adult  
-**Requires at least:** 3.4.2  
-**Tested up to:** 3.4.2  
-**Stable tag:** 1.0.4  
-**License:** GPLv2 or later  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
+**Contributors:** BarryCarlyon
+**Donate link:** http://barrycarlyon.co.uk/wordpress/wordpress-plugins/wp-zombaio/
+**Tags:** zombaio, membership, adult
+**Requires at least:** 3.4.2
+**Tested up to:** 3.6
+**Stable tag:** 1.0.5
+**License:** GPLv2 or later
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
 Catches PostBack Information from the Adult Payment Gateway Zombaio and acts accordingly
 
@@ -64,19 +64,10 @@ For Extra help/support or otherwise, either use the [WordPress Support Forum](ht
 
 ## Changelog ##
 
-### 1.1.0 ###
-* If Logged in don't show login form, both Widet and ShortCode
-* Added ability to control WordPress Menus (Logged In/Logged Out), this can be enabled/disabled in case your Theme Provides this option or you don't need it
-* Added Settings Upgrader
-* Show the User their Subscription ID and current Credits balance on the Profile Edit Page
-* Support Credit Purchase via Zombaio and crediting users with Credits, as a shortcode and sidebar widget
-* You can change a users current Credit Balance
-* Support Post/Page purchase via Credits, Items purchased can be set to be one off purchase, or timed access
-* Manually Suspend a user
-* Graphs!
-* Ability to enable/disable email copies and change the target email address for them
-* Added Approval and Decline URL's as arguments to both the shortcode and widget for Join Form
-* Added a option to the Login Widget to control the redirect on succesful login
+= 1.0.5 =
+* At the request of a user added the ability to unlock pages
+* You an unlock a page/post by editing it and set "Allow access to All" to Yes
+* Tested with 3.6 all seems good
 
 ### 1.0.4 ###
 * Tweaks to the Validate ZScript Code
@@ -90,11 +81,11 @@ For Extra help/support or otherwise, either use the [WordPress Support Forum](ht
 * Added a Login Widget
 * Added Login block, and the abilty to redirect users to a "Landing Page", default is the WP Login Page.
 * [zombaio_join] shortcode supports additional arguments:
-*** align - form placement - choices:** left center right  
-*** buttonalign - button placement - choices:** left center right  
+*** align - form placement - choices:** left center right
+*** buttonalign - button placement - choices:** left center right
 * width - form width
 * [zombaio_seal] shortcode supports additiona arguments:
-*** align - placement - choices:** left center right  
+*** align - placement - choices:** left center right
 * Added Shortcode [zombaio_login] renders a basic Login Form, its also a Widget
 
 ### 1.0.2 ###
