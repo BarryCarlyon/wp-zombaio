@@ -1120,6 +1120,7 @@ jQuery(document).ready(function() {
             exit;
         }
 
+        $user_id = false;
         $username = isset($_GET['username']) ? $_GET['username'] : false;
 
         // verify site ID
@@ -1200,7 +1201,7 @@ jQuery(document).ready(function() {
                 break;
             }
             case 'user.delete': {
-                $user = get_user_by('username', $username);
+                $user = get_user_by('login', $username);
                 if (!$user) {
                     echo 'USER_DOES_NOT_EXIST';
                     exit;
@@ -1322,6 +1323,10 @@ jQuery(document).ready(function() {
         $this->notifyadmin($logid, $logmsg);
 
         echo 'OK';
+
+        // emit hook
+        do_action('wp_zombaio_process', $action, $_REQUEST, $user_id, $username, $logid);
+
         exit;
     }
 
