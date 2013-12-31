@@ -132,13 +132,9 @@ echo '<p>' . __('You can optionally enable Zombaio Menu Control</p>', 'wp-zombai
 echo '<p>' . __('Essentially this means if your theme does not support showing a different Menu, based on if the user is Logged In or not, you can use the Plugin to power this instead', 'wp-zombaio') . '</p>';
 echo '<p>' . __('It is optional, as this functionality should really be provided by your Theme, rather than a plugin', 'wp-zombaio') . '</p>';
 
-$this->admin_page_spacer(__('Running a Membership Site', 'wp-zombaio'));
-
-echo sprintf(__('<p>For more thoughts and advice on Running a membership site, check out the <a href="%s" target="_blank">Your Members Blog</a></p>', 'wp-zombaio'), 'http://blog.yourmembers.co.uk/');
-
 $this->admin_page_spacer(__('Caching, (Plugins or Otherwise) and CloudFlare', 'wp-zombaio'));
 
-echo sprintf(__('<p>If you are running anything Caching related, (which you probably shouldn&#39;t on a <a href="%s" target="_blank">membership site</a>), you may need to Whitelist Zombaios Notifications IP Addresses, so they bypass the potential block</p>', 'wp-zombaio'), 'http://blog.yourmembers.co.uk/2012/your-members-and-caching/');
+echo __('<p>If you are running anything Caching related, (which you probably shouldn&#39;t on a membership site), you may need to Whitelist Zombaios Notifications IP Addresses, so they bypass the potential block</p>', 'wp-zombaio');
 echo sprintf(__('<h4>Known Caching Plugins and How to Bypass</h4>
 
 <ul class="disc">
