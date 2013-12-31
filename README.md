@@ -1,12 +1,12 @@
 # WP Zombaio #
-**Contributors:** BarryCarlyon  
-**Donate link:** http://barrycarlyon.co.uk/wordpress/wordpress-plugins/wp-zomabio/  
-**Tags:** zombaio, membership, adult  
-**Requires at least:** 3.4.2  
-**Tested up to:** 3.6  
-**Stable tag:** 1.0.6  
-**License:** GPLv2 or later  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
+**Contributors:** BarryCarlyon
+**Donate link:** http://barrycarlyon.co.uk/wordpress/wordpress-plugins/wp-zomabio/
+**Tags:** zombaio, membership, adult
+**Requires at least:** 3.4.2
+**Tested up to:** 3.6
+**Stable tag:** 1.0.6
+**License:** GPLv2 or later
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
 Catches PostBack Information from the Adult Payment Gateway Zombaio and acts accordingly
 
@@ -79,6 +79,15 @@ For Extra help/support or otherwise, either use the [WordPress Support Forum](ht
 * Added useful data to the Users list (see the 11th Screenshot - Updating Users - Table).
 * Fix the wp-login.php redirect to support home_url being different to site_url
 * Cleaned up the guide and the wizard, and added some screenshots to help quick start setup
+
+### 1.0.7 (Coming Soon) ###
+* Fix to make Zombaio Simulator work (when ByPass IPN Verification is enabled)
+* Optimized detect and Fire for processing payments
+* Added a Post Payment Process Action, so you can run your own stuff after a payment has run
+
+### 1.0.6.2 ###
+* Fix a bug involving User Suspension/Deletion (reported by Jose Angel)
+* Confirmed 3.8 compatability
 
 ### 1.0.6 ###
 * At the request of Sam Rockhard owner of New Market Media, added the ability to unlock pages

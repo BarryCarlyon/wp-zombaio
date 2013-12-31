@@ -8,6 +8,7 @@ switch ($step) {
         $this->saveoptions();
         echo '<div id="message" class="updated"><p>' . __('All Done, you are ready to go', 'wp-zombaio') . '</p></div>';
         echo '<div id="message" class="error"><p>' . __('Make sure when you are ready to go, to set your <strong>Site Profile, Production mode to LIVE</strong>, otherwise you will not be able to take any money!', 'wp-zombaio') . '</p></div>';
+        echo '<div id="message" class="error"><p>' . __('Simulation Mode does not play well with WP Zombaio', 'wp-zombaio') . '</p></div>';
         echo __('<p>You can now review the current options and change advanced options</p>', 'wp-zombaio');
         $do = false;
         break;
