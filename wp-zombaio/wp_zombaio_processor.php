@@ -50,6 +50,13 @@ fclose($fp);
                 echo 'OK';
                 exit;
             }
+            // add a live/simulated toggle
+            /**
+<select size="1" name="ProductionMode" id="ProductionMode">
+                            <option value="0" selected="">Simulated mode</option>
+                            <option value="1">Live mode</option>
+                            </select>
+            */
             // patch for simulator
             if (!$site_id && count($_GET) == 3 && !empty($username)) {
                 // we got Action/pass/username

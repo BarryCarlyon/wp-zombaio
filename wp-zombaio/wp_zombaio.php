@@ -880,6 +880,7 @@ jQuery(document).ready(function() {
                     case 'user_delete':
                         echo '<th>' . __('User', 'wp-zombaio') , '</th>';
                         echo '<th>' . __('Delete Reason', 'wp-zombaio') . '</th>';
+                        echo '<th>' . __('Result', 'wp-zombaio') . '</th>';
                         break;
                     case 'user_addcredits':
                         echo '<th>' . __('User', 'wp-zombaio') , '</th>';
@@ -964,6 +965,9 @@ jQuery(document).ready(function() {
                         }
                         echo '</td>';
                         echo '<td>' . (isset($this->delete_codes[$json->ReasonCode]) ? $json->ReasonCode . ' - ' . $this->delete_codes[$json->ReasonCode] : 'Unknown') . '</td>';
+                        $reason = get_post_meta($post->ID, 'wp_zombaio_logmessage', true);
+                        if (!$reason) { $reason = __('Failed', 'wp-zombaio'); }
+                        echo '<td>' . $reason . '</td>';
                         break;
                     case 'user_addcredits':
                         if ($user_id = get_post_meta($post->ID, 'wp_zombaio_user_id', true)) {
