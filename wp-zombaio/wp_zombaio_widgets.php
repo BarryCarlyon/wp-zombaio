@@ -75,18 +75,30 @@ class wp_zombaio_widget extends wp_widget {
         );
         $instance = wp_parse_args((array)$instance, $defaults);
 
-        echo '<label for="' . $this->get_field_id('title') . '">' . __('Title:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('title') . '" id="' . $this->get_field_id('title') . '" value="' . $instance['title'] . '" /></label>';
-        echo '<br />';
-        echo '<label for="' . $this->get_field_id('join_url') . '">' . __('Join Form URL:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('join_url') . '" id="' . $this->get_field_id('join_url') . '" value="' . $instance['join_url'] . '" /></label>';
-        echo '<br />';
-        echo '<label for="' . $this->get_field_id('message') . '">' . __('Intro Text:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('message') . '" id="' . $this->get_field_id('message') . '" value="' . $instance['message'] . '" /></label>';
-        echo '<br />';
-        echo '<label for="' . $this->get_field_id('approve_url') . '">' . __('Thank You/Payment Complete URL:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('approve_url') . '" id="' . $this->get_field_id('approve_url') . '" value="' . $instance['approve_url'] . '" /></label>';
-        echo '<br />';
-        echo '<label for="' . $this->get_field_id('decline_url') . '">' . __('Payment Declined URL:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('decline_url') . '" id="' . $this->get_field_id('decline_url') . '" value="' . $instance['decline_url'] . '" /></label>';
-        echo '<br />';
-        echo '<label for="' . $this->get_field_id('submit') . '">' . __('Submit Button:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('submit') . '" id="' . $this->get_field_id('submit') . '" value="' . $instance['submit'] . '" /></label>';
-        echo '<br />';
+        echo '<p>';
+        echo '<label for="' . $this->get_field_id('title') . '">' . __('Title:', 'wp-zombaio') . '</label>';
+        echo '<input class="widefat" type="text" name="' . $this->get_field_name('title') . '" id="' . $this->get_field_id('title') . '" value="' . $instance['title'] . '" />';
+        echo '</p>';
+        echo '<p>';
+        echo '<label for="' . $this->get_field_id('join_url') . '">' . __('Join Form URL:', 'wp-zombaio') . '</label>';
+        echo '<input class="widefat" type="text" name="' . $this->get_field_name('join_url') . '" id="' . $this->get_field_id('join_url') . '" value="' . $instance['join_url'] . '" />';
+        echo '</p>';
+        echo '<p>';
+        echo '<label for="' . $this->get_field_id('message') . '">' . __('Intro Text:', 'wp-zombaio') . '</label>';
+        echo '<input class="widefat" type="text" name="' . $this->get_field_name('message') . '" id="' . $this->get_field_id('message') . '" value="' . $instance['message'] . '" />';
+        echo '</p>';
+        echo '<p>';
+        echo '<label for="' . $this->get_field_id('approve_url') . '">' . __('Thank You/Payment Complete URL:', 'wp-zombaio') . '</label>';
+        echo '<input class="widefat" type="text" name="' . $this->get_field_name('approve_url') . '" id="' . $this->get_field_id('approve_url') . '" value="' . $instance['approve_url'] . '" />';
+        echo '</p>';
+        echo '<p>';
+        echo '<label for="' . $this->get_field_id('decline_url') . '">' . __('Payment Declined URL:', 'wp-zombaio') . '</label>';
+        echo '<input class="widefat" type="text" name="' . $this->get_field_name('decline_url') . '" id="' . $this->get_field_id('decline_url') . '" value="' . $instance['decline_url'] . '" />';
+        echo '</p>';
+        echo '<p>';
+        echo '<label for="' . $this->get_field_id('submit') . '">' . __('Submit Button:', 'wp-zombaio') . '</label>';
+        echo '<input class="widefat" type="text" name="' . $this->get_field_name('submit') . '" id="' . $this->get_field_id('submit') . '" value="' . $instance['submit'] . '" />';
+        echo '</p>';
     }
 
     function flush_widget_cache() {
@@ -207,23 +219,26 @@ class wp_zombaio_login extends wp_widget {
         );
         $instance = wp_parse_args((array)$instance, $defaults);
 
-        echo '<label style="display: block;" for="' . $this->get_field_id('title') . '">' . __('Title:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('title') . '" id="' . $this->get_field_id('title') . '" value="' . $instance['title'] . '" style="float: right;" /></label>';
-        echo '<br />';
-        echo '<label style="display: block;" for="' . $this->get_field_id('redirect') . '">' . __('Redirect to:', 'wp-zombaio');
+        echo '<p>';
+        echo '<label for="' . $this->get_field_id('title') . '">' . __('Title:', 'wp-zombaio') . '</label>';
+        echo '<input class="widefat" type="text" name="' . $this->get_field_name('title') . '" id="' . $this->get_field_id('title') . '" value="' . $instance['title'] . '" />';
+        echo '</p>';
+        echo '<p>';
+        echo '<label for="' . $this->get_field_id('redirect') . '">' . __('Redirect to:', 'wp-zombaio') . '</label>';
 
-        echo '<div style="float: right;">';
+        echo '<div class="widefat">';
         wp_dropdown_pages(array(
             'name' => $this->get_field_name('redirect'),
             'echo' => 1,
             'show_option_none' => __('Same Page', 'wp-zombaio'),
             'option_none_value' => '',
-            'selected' => $instance['redirect']
+            'selected' => $instance['redirect'],
         ));
-        echo '</div></label>
+        echo '</div>
         <br />
-        ' . __('Leave blank for on successful Login, redirect to the same page', 'wp-zombaio');
-
-        echo '<br />';
+        ' . __('Leave blank for on successful Login, redirect to the same page', 'wp-zombaio') . '
+        </p>
+        ';
     }
 
     function flush_widget_cache() {
@@ -298,16 +313,26 @@ class wp_zombaio_credits extends wp_widget {
         );
         $instance = wp_parse_args((array)$instance, $defaults);
 
-        echo '<label for="' . $this->get_field_id('title') . '">' . __('Title:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('title') . '" id="' . $this->get_field_id('title') . '" value="' . $instance['title'] . '" /></label>';
-        echo '<br />';
-        echo '<label for="' . $this->get_field_id('join_url') . '">' . __('Join Form URL:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('join_url') . '" id="' . $this->get_field_id('join_url') . '" value="' . $instance['join_url'] . '" /></label>';
-        echo '<br />';
-        echo '<label for="' . $this->get_field_id('approve_url') . '">' . __('Thank You/Payment Complete URL:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('approve_url') . '" id="' . $this->get_field_id('approve_url') . '" value="' . $instance['approve_url'] . '" /></label>';
-        echo '<br />';
-        echo '<label for="' . $this->get_field_id('decline_url') . '">' . __('Payment Declined URL:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('decline_url') . '" id="' . $this->get_field_id('decline_url') . '" value="' . $instance['decline_url'] . '" /></label>';
-        echo '<br />';
-        echo '<label for="' . $this->get_field_id('submit') . '">' . __('Submit Button:', 'wp-zombaio') . ' <input type="text" name="' . $this->get_field_name('submit') . '" id="' . $this->get_field_id('submit') . '" value="' . $instance['submit'] . '" /></label>';
-        echo '<br />';
+        echo '<p>';
+        echo '<label for="' . $this->get_field_id('title') . '">' . __('Title:', 'wp-zombaio') . '</label>';
+        echo '<input class="widefat" type="text" name="' . $this->get_field_name('title') . '" id="' . $this->get_field_id('title') . '" value="' . $instance['title'] . '" />';
+        echo '</p>';
+        echo '<p>';
+        echo '<label for="' . $this->get_field_id('join_url') . '">' . __('Join Form URL:', 'wp-zombaio') . '</label>';
+        echo '<input class="widefat" type="text" name="' . $this->get_field_name('join_url') . '" id="' . $this->get_field_id('join_url') . '" value="' . $instance['join_url'] . '" />';
+        echo '</p>';
+        echo '<p>';
+        echo '<label for="' . $this->get_field_id('approve_url') . '">' . __('Thank You/Payment Complete URL:', 'wp-zombaio') . '</label>';
+        echo '<input class="widefat" type="text" name="' . $this->get_field_name('approve_url') . '" id="' . $this->get_field_id('approve_url') . '" value="' . $instance['approve_url'] . '" />';
+        echo '</p>';
+        echo '<p>';
+        echo '<label for="' . $this->get_field_id('decline_url') . '">' . __('Payment Declined URL:', 'wp-zombaio') . '</label>';
+        echo '<input class="widefat" type="text" name="' . $this->get_field_name('decline_url') . '" id="' . $this->get_field_id('decline_url') . '" value="' . $instance['decline_url'] . '" />';
+        echo '</p>';
+        echo '<p>';
+        echo '<label for="' . $this->get_field_id('submit') . '">' . __('Submit Button:', 'wp-zombaio') . '</label>';
+        echo '<input class="widefat" type="text" name="' . $this->get_field_name('submit') . '" id="' . $this->get_field_id('submit') . '" value="' . $instance['submit'] . '" />';
+        echo '</p>';
     }
 
     function flush_widget_cache() {

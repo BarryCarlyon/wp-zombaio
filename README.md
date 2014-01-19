@@ -84,6 +84,7 @@ For Extra help/support or otherwise, either use the [WordPress Support Forum](ht
 * Fix to make Zombaio Simulator work (when ByPass IPN Verification is enabled)
 * Optimized detect and Fire for processing payments
 * Added a Post Payment Process Action, so you can run your own stuff after a payment has run
+* Fix Widget editing admin form layout
 
 ### 1.0.6.2 ###
 * Fix a bug involving User Suspension/Deletion (reported by Jose Angel)
